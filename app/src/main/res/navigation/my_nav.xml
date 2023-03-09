@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/item_home">
+
+    <fragment
+        android:id="@+id/item_home"
+        android:name="com.example.feedcraft.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/item_feed"
+        android:name="com.example.feedcraft.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_item_feed_to_feedDialogFragment"
+            app:destination="@id/feedDialogFragment" />
+        <action
+            android:id="@+id/action_item_feed_to_deleteDialogFragment"
+            app:destination="@id/deleteDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/item_settings"
+        android:name="com.example.feedcraft.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <dialog
+        android:id="@+id/feedDialogFragment"
+        android:name="com.example.feedcraft.FeedDialogFragment"
+        android:label="fragment_feed_dialog"
+        tools:layout="@layout/fragment_feed_dialog" />
+    <dialog
+        android:id="@+id/deleteDialogFragment"
+        android:name="com.example.feedcraft.DeleteDialogFragment"
+        android:label="fragment_delete_dialog"
+        tools:layout="@layout/fragment_delete_dialog" />
+</navigation>
