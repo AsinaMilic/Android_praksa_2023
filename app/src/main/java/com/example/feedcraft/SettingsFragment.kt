@@ -63,7 +63,9 @@ class SettingsFragment : Fragment() {
 
         binding.ViewRate.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://play.google.com/store/apps/details?id=$ourDev")
+                //data = Uri.parse("https://play.google.com/store/apps/id=$ourDev")
+                data = Uri.parse("https://play.google.com/store/search?q=$ourDev")
+                //http://play.google.com/store/search?q=maps&c=apps
                 setPackage("com.android.vending")
             }
             try {
@@ -129,7 +131,6 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         
     }
