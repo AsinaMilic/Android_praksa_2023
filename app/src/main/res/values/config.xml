@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="countdownTimer">2</integer>
+    <string name="play_store_package_id">com.Creative.Dollify.Cute.Doll.Avatar.Maker</string>
+    <string name="play_store_dev">Riot+Games,+Inc</string>
+    <string name="privacy_link">"https://webelinx.com/privacy-policy-doo/"</string>
+    <string name="feedback_message">Check this app!</string>
+    <string name="mail_of_company">feedback@yourdomain.com</string>
 </resources>

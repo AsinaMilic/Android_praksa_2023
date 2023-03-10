@@ -6,37 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.feedcraft.databinding.FragmentEditBinding
+
+import com.example.feedcraft.databinding.FragmentFeedBinding
 
 
+class FeedFragment : Fragment() {
 
-class EditFragment : Fragment() {
-
-    private var _binding: FragmentEditBinding? = null
+    private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.ViewCaption.setOnClickListener{
-            val action = EditFragmentDirections.actionEditFragmentToAddCaptionDialogFragment2()
+        binding.textViewDelete.setOnClickListener{
+            val action = FeedFragmentDirections.actionItemFeedToDeleteDialogFragment()
             findNavController().navigate(action)
         }
-        binding.imageViewFinish.setOnClickListener{
-            val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
+        binding.textViewEdit.setOnClickListener{
+            val action = FeedFragmentDirections.actionItemFeedToEditFragment()
             findNavController().navigate(action)
         }
-
     }
+
 }

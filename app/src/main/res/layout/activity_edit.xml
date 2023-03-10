@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/ico_arrow_back" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/imageViewFinish"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
@@ -69,7 +69,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ico_check" />
@@ -83,7 +83,7 @@
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack" />
 
     <ImageView
@@ -272,11 +272,19 @@
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:scrollbarSize="@dimen/cardview_default_radius"
+        android:layout_width="332dp"
+        android:layout_height="82dp"
+        android:thumb="@drawable/slider_circle"
         app:layout_constraintBottom_toTopOf="@+id/imageView12"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline19" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.74" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
