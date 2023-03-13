@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 
 
@@ -25,8 +26,8 @@ class AddCaptionDialogFragment : DialogFragment() {
 
         val view = inflater.inflate(R.layout.fragment_add_caption_dialog, container, false)
 
-        val parentLayout = view?.findViewById<View>(R.id.parent_add_caption_dialog)
-        val childLayout = view?.findViewById<View>(R.id.child_add_caption_dialog)
+        val parentLayout = view?.findViewById<View>(R.id.add_caption_dialog)
+        val childLayout = view?.findViewById<View>(R.id.viewAddCaptionDialog)
         parentLayout?.setOnClickListener {
             dismiss()
         }
@@ -34,10 +35,20 @@ class AddCaptionDialogFragment : DialogFragment() {
             // Ovdje dodajte željenu akciju koju želite obaviti kada se klikne na unutarnji layout
             dismiss()
         }
-        /*dialog?.setCancelable(false)*/
+
         dialog?.setCanceledOnTouchOutside(true)
 
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        dialog?.window?.setLayout(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
+
     }
 
 }

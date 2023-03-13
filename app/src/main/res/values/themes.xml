@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">@color/bg_color_light</item>
         <item name="colorOnPrimary">@color/icon_text_light</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/main_color_dark</item>
+        <!--<item name="colorSecondary">@color/main_color_dark</item>
         <item name="colorSecondaryVariant">@color/bg_color_dark</item>
-        <item name="colorOnSecondary">@color/icon_text_dark</item>
+        <item name="colorOnSecondary">@color/icon_text_dark</item>-->
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
@@ -40,6 +40,19 @@
         <item name="android:width">58dp</item>
         <item name="android:height">28dp</item>
 
+    </style>
+
+    <!--custom dialog theme-->
+    <style name="full_screen_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item> <!-- Kada je setovan ovaj property dialog se ne resize-je kada se otvori keyboard -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
     </style>
 
 </resources>

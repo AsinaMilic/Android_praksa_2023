@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">@color/bg_color_dark</item>
         <item name="colorOnPrimary">@color/icon_text_dark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/main_color_light</item>
+        <!--<item name="colorSecondary">@color/main_color_light</item>
         <item name="colorSecondaryVariant">@color/bg_color_light</item>
-        <item name="colorOnSecondary">@color/icon_text_light</item>
+        <item name="colorOnSecondary">@color/icon_text_light</item>-->
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
