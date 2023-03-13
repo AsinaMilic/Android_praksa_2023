@@ -1,5 +1,7 @@
 package com.example.feedcraft
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,8 +21,23 @@ class AddCaptionDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_caption_dialog, container, false)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val view = inflater.inflate(R.layout.fragment_add_caption_dialog, container, false)
+
+        val parentLayout = view?.findViewById<View>(R.id.parent_add_caption_dialog)
+        val childLayout = view?.findViewById<View>(R.id.child_add_caption_dialog)
+        parentLayout?.setOnClickListener {
+            dismiss()
+        }
+        childLayout?.setOnClickListener {
+            // Ovdje dodajte željenu akciju koju želite obaviti kada se klikne na unutarnji layout
+            dismiss()
+        }
+        /*dialog?.setCancelable(false)*/
+        dialog?.setCanceledOnTouchOutside(true)
+
+        return view
     }
 
 }

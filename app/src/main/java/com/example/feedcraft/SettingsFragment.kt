@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,30 +13,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
-import com.example.feedcraft.databinding.FragmentEditBinding
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.feedcraft.databinding.FragmentSettingsBinding
-import org.w3c.dom.Text
+
 
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
-
-    fun getUriFromDrawableResId(context: Context, drawableResId: Int): Uri {
-        val builder: StringBuilder = StringBuilder().append(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .append("://")
-            .append(context.getResources().getResourcePackageName(drawableResId))
-            .append("/")
-            .append(context.getResources().getResourceTypeName(drawableResId))
-            .append("/")
-            .append(context.getResources().getResourceEntryName(drawableResId));
-        return Uri.parse(builder.toString());
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -132,7 +118,27 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        
+        //To set the initial position of the Switch based on the current theme
+        binding.switch1.isChecked = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+        binding.switch1.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
+    }
+    fun getUriFromDrawableResId(context: Context, drawableResId: Int): Uri {
+        val builder: StringBuilder = StringBuilder().append(ContentResolver.SCHEME_ANDROID_RESOURCE)
+            .append("://")
+            .append(context.getResources().getResourcePackageName(drawableResId))
+            .append("/")
+            .append(context.getResources().getResourceTypeName(drawableResId))
+            .append("/")
+            .append(context.getResources().getResourceEntryName(drawableResId));
+        return Uri.parse(builder.toString());
     }
 
 }

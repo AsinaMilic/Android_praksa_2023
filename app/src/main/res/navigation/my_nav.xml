@@ -9,7 +9,11 @@
         android:id="@+id/item_home"
         android:name="com.example.feedcraft.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_item_home_to_item_feed"
+            app:destination="@id/item_feed" />
+    </fragment>
     <fragment
         android:id="@+id/item_feed"
         android:name="com.example.feedcraft.FeedFragment"
@@ -49,7 +53,11 @@
         android:id="@+id/scheduleReminderFragment"
         android:name="com.example.feedcraft.ScheduleReminderFragment"
         android:label="fragment_schedule_reminder"
-        tools:layout="@layout/fragment_schedule_reminder" />
+        tools:layout="@layout/fragment_schedule_reminder" >
+        <action
+            android:id="@+id/action_scheduleReminderFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editFragment"
         android:name="com.example.feedcraft.EditFragment"
@@ -61,10 +69,20 @@
         <action
             android:id="@+id/action_editFragment_to_finishFragment"
             app:destination="@id/finishFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_item_feed"
+            app:destination="@id/item_feed" />
     </fragment>
     <fragment
         android:id="@+id/finishFragment"
         android:name="com.example.feedcraft.FinishFragment"
         android:label="fragment_finish"
-        tools:layout="@layout/fragment_finish" />
+        tools:layout="@layout/fragment_finish" >
+        <action
+            android:id="@+id/action_finishFragment_to_item_feed"
+            app:destination="@id/item_feed" />
+        <action
+            android:id="@+id/action_finishFragment_to_scheduleReminderFragment"
+            app:destination="@id/scheduleReminderFragment" />
+    </fragment>
 </navigation>
