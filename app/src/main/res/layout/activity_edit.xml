@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/ico_arrow_back" />
 
     <ImageView
-        android:id="@+id/imageViewFinish"
+        android:id="@+id/imageViewDone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
@@ -69,7 +69,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDone"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ico_check" />
@@ -83,11 +83,11 @@
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDone"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/imageViewSave"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleY="1.6"
@@ -118,7 +118,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline1vertical"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSave"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
         app:layout_constraintVertical_bias="0.148"
         app:srcCompat="@drawable/ico_caption" />
@@ -165,7 +165,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewSave"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintHorizontal_bias="1.0"
@@ -244,7 +244,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Brightness"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline3vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline2vertical"
         app:layout_constraintTop_toBottomOf="@+id/imageView16" />
@@ -275,7 +275,7 @@
         android:layout_width="332dp"
         android:layout_height="82dp"
         android:thumb="@drawable/slider_circle"
-        app:layout_constraintBottom_toTopOf="@+id/imageView12"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline19" />

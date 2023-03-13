@@ -3,6 +3,7 @@ package com.example.feedcraft
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -25,6 +26,28 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment  //as (cast)
         val navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.editFragment -> binding.bottomNavigation.visibility = View.GONE
+                R.id.finishFragment -> binding.bottomNavigation.visibility = View.GONE
+                R.id.addCaptionDialogFragment2 -> binding.bottomNavigation.visibility = View.GONE //??
+                R.id.scheduleReminderFragment -> binding.bottomNavigation.visibility = View.GONE
+                else -> binding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
+
+
+        /*navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.editFragment) {
+                toolbar.visibility = View.GONE
+                bottomNavigationView.visibility = View.GONE
+            } else {
+                toolbar.visibility = View.VISIBLE
+                bottomNavigationView.visibility = View.VISIBLE
+            }
+        }*/
+
 
 
         /*val btnOk = findViewById<Button>(R.id.btnOk)

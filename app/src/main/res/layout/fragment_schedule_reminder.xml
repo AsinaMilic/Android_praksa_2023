@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.085" />
+        app:layout_constraintGuide_percent="0.08" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTopOfBack"
@@ -44,6 +44,8 @@
         android:id="@+id/imageViewBack"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="@+id/guideline28"
@@ -52,12 +54,14 @@
         app:srcCompat="@drawable/ico_arrow_back" />
 
     <ImageView
-        android:id="@+id/imageViewFinish"
+        android:id="@+id/imageViewDone"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
-        app:layout_constraintDimensionRatio="3.5"
+        app:layout_constraintDimensionRatio="440:170"
         app:layout_constraintEnd_toEndOf="@+id/viewHeader"
+        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintStart_toStartOf="@+id/guideline27"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/btn_main_full" />
@@ -66,11 +70,12 @@
         android:id="@+id/imageViewCheckmark"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDone"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ico_check" />
@@ -83,17 +88,11 @@
         android:textColor="#fff"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/BotOfBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.575"
-        app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewDone"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDone"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
@@ -111,7 +110,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintStart_toStartOf="@+id/guideline28"
-        app:layout_constraintTop_toTopOf="@+id/guideline21"
+        app:layout_constraintTop_toTopOf="@+id/guidelineBottomHeader"
         app:layout_constraintVertical_bias="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -132,9 +131,8 @@
         android:id="@+id/imageViewScheduleMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/schedule_message_icon"
 
+        android:background="@drawable/schedule_message_icon"
         android:hint="Type something..."
         app:layout_constraintBottom_toTopOf="@+id/guideline29"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
@@ -155,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.63" />
+        app:layout_constraintGuide_percent="0.62" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline32"
@@ -200,7 +198,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.38" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <TextView
         android:id="@+id/imageView"
@@ -249,7 +247,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.74" />
+        app:layout_constraintGuide_percent="0.72" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

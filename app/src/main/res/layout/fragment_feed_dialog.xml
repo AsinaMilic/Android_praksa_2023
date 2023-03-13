@@ -1,112 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_feed_dialog"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/popup_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".FeedDialogFragment">
+    <!--android:background="@color/transparent"-->
 
-    <TextView
-        android:id="@+id/textViewFeed"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:paddingLeft="45dp"
-        android:paddingEnd="45dp"
-        android:text="Add picture from:"
-        android:textColor="@color/icon_text_light"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
 
-    <ImageView
-        android:id="@+id/imageViewOK"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/btn_main_full"
-        app:layout_constraintDimensionRatio="320:120"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewCancel"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFeed"
-        app:layout_constraintWidth_percent="0.4" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.93" />
 
-    <ImageView
-        android:id="@+id/imageViewCancel"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/child_feed_dialog"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.4"
-        app:layout_constraintDimensionRatio="320:120"
         android:layout_marginStart="16dp"
-        android:src="@drawable/btn_main_full"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewOK"
-        app:layout_constraintTop_toTopOf="@+id/imageViewOK" />
-
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        android:src="@drawable/ico_gallery"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewOK"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewOK"
-        app:layout_constraintHorizontal_bias="0.089"
-        app:layout_constraintStart_toStartOf="@+id/imageViewOK"
-        app:layout_constraintTop_toTopOf="@+id/imageViewOK"
-        app:layout_constraintWidth_percent="0.1" />
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/dialog_background"
+        app:layout_constraintBottom_toTopOf="@+id/guideline37"
+        app:layout_constraintDimensionRatio="5:2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline35"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline36"
+        tools:context=".FeedDialogFragmentInside">
 
 
-    <TextView
-        android:id="@+id/textViewGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Gallery"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewOK"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewOK"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toEndOf="@+id/imageView13"
-        app:layout_constraintTop_toTopOf="@+id/imageViewOK"
-        app:layout_constraintVertical_bias="1.0" />
+        <TextView
+            android:id="@+id/textViewAddCapiton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add a picture from:"
+            android:textColor="@color/icon_text_light"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26" />
 
-    <ImageView
-        android:id="@+id/imageViewGallery"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        android:src="@drawable/ico_camera"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewCancel"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewCancel"
-        app:layout_constraintHorizontal_bias="0.089"
-        app:layout_constraintStart_toStartOf="@+id/imageViewCancel"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCancel"
-        app:layout_constraintWidth_percent="0.1" />
+        <TextView
+            android:id="@+id/textViewOK"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/button_full"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="330:120"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEndOfGallery"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStartOfGallery"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddCapiton" />
 
-    <TextView
-        android:id="@+id/textViewCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Camera"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewCancel"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewCancel"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="@+id/imageViewGallery"
-        app:layout_constraintTop_toTopOf="@+id/imageViewCancel"
-        app:layout_constraintVertical_bias="0.0" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStartOfGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEndOfGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.42" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStartOfCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.58" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEndOfCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <ImageView
+            android:id="@+id/imageView19"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ico_gallery"
+            app:layout_constraintBottom_toTopOf="@+id/guideline39"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="@+id/textViewOK"
+            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintStart_toStartOf="@+id/textViewOK"
+            app:layout_constraintTop_toTopOf="@+id/guideline40"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.77" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.61" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gallery"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline39"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEndOfGallery"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toStartOf="@+id/textViewOK"
+            app:layout_constraintTop_toTopOf="@+id/guideline40"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/button_full"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="320:120"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEndOfCamera"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStartOfCamera"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddCapiton" />
+
+        <ImageView
+            android:id="@+id/imageView20"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ico_camera"
+            app:layout_constraintBottom_toTopOf="@+id/guideline39"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEndOfCamera"
+            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStartOfCamera"
+            app:layout_constraintTop_toTopOf="@+id/guideline40"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camera"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline39"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineEndOfCamera"
+            app:layout_constraintHorizontal_bias="0.7"
+            app:layout_constraintStart_toStartOf="@+id/guidelineStartOfCamera"
+            app:layout_constraintTop_toTopOf="@+id/guideline40" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

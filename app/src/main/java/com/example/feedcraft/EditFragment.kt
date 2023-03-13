@@ -37,6 +37,11 @@ class EditFragment : Fragment() {
             val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
             findNavController().navigate(action)
         }
+        binding.imageViewBack.setOnClickListener {
+            val action = EditFragmentDirections.actionEditFragmentToItemFeed()
+            findNavController().navigate(action)
+        }
+
 
     }
 }
