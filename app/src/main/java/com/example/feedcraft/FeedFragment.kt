@@ -39,7 +39,7 @@ class FeedFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.textViewEdit.setOnClickListener{
-            val action = FeedFragmentDirections.actionItemFeedToEditFragment()
+            val action = FeedFragmentDirections.actionItemFeedToEditActivity()
             findNavController().navigate(action)
         }
         binding.imageViewButtonPlus.setOnClickListener{

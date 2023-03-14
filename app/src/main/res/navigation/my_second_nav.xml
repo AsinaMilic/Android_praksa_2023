@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_second_nav"
+    app:startDestination="@id/editFragment">
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.example.feedcraft.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_editFragment_to_addCaptionDialogFragment"
+            app:destination="@id/addCaptionDialogFragment" />
+        <action
+            android:id="@+id/action_editFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/addCaptionDialogFragment"
+        android:name="com.example.feedcraft.AddCaptionDialogFragment"
+        android:label="fragment_add_caption_dialog"
+        tools:layout="@layout/fragment_add_caption_dialog" />
+    <fragment
+        android:id="@+id/finishFragment"
+        android:name="com.example.feedcraft.FinishFragment"
+        android:label="fragment_finish"
+        tools:layout="@layout/fragment_finish" >
+        <action
+            android:id="@+id/action_finishFragment_to_scheduleReminderFragment2"
+            app:destination="@id/scheduleReminderFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleReminderFragment2"
+        android:name="com.example.feedcraft.ScheduleReminderFragment"
+        android:label="fragment_schedule_reminder"
+        tools:layout="@layout/fragment_schedule_reminder" />
+</navigation>

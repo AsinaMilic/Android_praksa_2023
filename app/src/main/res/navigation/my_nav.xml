@@ -26,8 +26,8 @@
             android:id="@+id/action_item_feed_to_deleteDialogFragment"
             app:destination="@id/deleteDialogFragment" />
         <action
-            android:id="@+id/action_item_feed_to_editFragment"
-            app:destination="@id/editFragment" />
+            android:id="@+id/action_item_feed_to_editActivity"
+            app:destination="@id/editActivity" />
     </fragment>
     <fragment
         android:id="@+id/item_settings"
@@ -44,45 +44,14 @@
         android:name="com.example.feedcraft.DeleteDialogFragment"
         android:label="fragment_delete_dialog"
         tools:layout="@layout/fragment_delete_dialog" />
-    <dialog
-        android:id="@+id/addCaptionDialogFragment2"
-        android:name="com.example.feedcraft.AddCaptionDialogFragment"
-        android:label="fragment_add_caption_dialog"
-        tools:layout="@layout/fragment_add_caption_dialog" />
     <fragment
         android:id="@+id/scheduleReminderFragment"
         android:name="com.example.feedcraft.ScheduleReminderFragment"
         android:label="fragment_schedule_reminder"
-        tools:layout="@layout/fragment_schedule_reminder" >
-        <action
-            android:id="@+id/action_scheduleReminderFragment_to_finishFragment"
-            app:destination="@id/finishFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editFragment"
-        android:name="com.example.feedcraft.EditFragment"
-        android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" >
-        <action
-            android:id="@+id/action_editFragment_to_addCaptionDialogFragment2"
-            app:destination="@id/addCaptionDialogFragment2" />
-        <action
-            android:id="@+id/action_editFragment_to_finishFragment"
-            app:destination="@id/finishFragment" />
-        <action
-            android:id="@+id/action_editFragment_to_item_feed"
-            app:destination="@id/item_feed" />
-    </fragment>
-    <fragment
-        android:id="@+id/finishFragment"
-        android:name="com.example.feedcraft.FinishFragment"
-        android:label="fragment_finish"
-        tools:layout="@layout/fragment_finish" >
-        <action
-            android:id="@+id/action_finishFragment_to_item_feed"
-            app:destination="@id/item_feed" />
-        <action
-            android:id="@+id/action_finishFragment_to_scheduleReminderFragment"
-            app:destination="@id/scheduleReminderFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_schedule_reminder" />
+    <activity
+        android:id="@+id/editActivity"
+        android:name="com.example.feedcraft.EditActivity"
+        android:label="activity_edit"
+        tools:layout="@layout/activity_edit" />
 </navigation>

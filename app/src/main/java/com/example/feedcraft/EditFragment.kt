@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.feedcraft.databinding.FragmentEditBinding
+import androidx.fragment.app.FragmentManager
+
+/*import com.example.feedcraft.databinding.FragmentEditBinding*/
 
 
 
-class EditFragment : Fragment() {
+class EditFragment :  Fragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +33,7 @@ class EditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.ViewCaption.setOnClickListener{
-            val action = EditFragmentDirections.actionEditFragmentToAddCaptionDialogFragment2()
+            val action = EditFragmentDirections.actionEditFragmentToAddCaptionDialogFragment()
             findNavController().navigate(action)
         }
         binding.imageViewFinish.setOnClickListener{
@@ -38,8 +41,10 @@ class EditFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.imageViewBack.setOnClickListener {
-            val action = EditFragmentDirections.actionEditFragmentToItemFeed()
-            findNavController().navigate(action)
+            /*val action = EditFragmentDirections.
+            findNavController().navigate(action)*/
+            // Get the fragment instance
+
         }
 
 
