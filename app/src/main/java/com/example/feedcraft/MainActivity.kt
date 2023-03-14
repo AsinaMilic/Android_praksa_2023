@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
+        /*navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.editFragment -> binding.bottomNavigation.visibility = View.GONE
                 R.id.finishFragment -> binding.bottomNavigation.visibility = View.GONE
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.scheduleReminderFragment -> binding.bottomNavigation.visibility = View.GONE
                 else -> binding.bottomNavigation.visibility = View.VISIBLE
             }
-        }
+        }*/
 
 
         /*navController.addOnDestinationChangedListener { _, destination, _ ->

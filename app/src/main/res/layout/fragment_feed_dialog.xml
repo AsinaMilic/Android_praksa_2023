@@ -36,7 +36,7 @@
         app:layout_constraintGuide_percent="0.6" />
 
     <View
-        android:id="@+id/viewDelete"
+        android:id="@+id/viewFeedDialog"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/dialog_background"
@@ -92,11 +92,11 @@
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/viewDelete"
+        app:layout_constraintTop_toTopOf="@+id/viewFeedDialog"
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewFeedGallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button_full"
@@ -109,7 +109,7 @@
         app:layout_constraintVertical_bias="0.483" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textViewFeedCamera"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button_full"
@@ -151,9 +151,9 @@
         android:text="Gallery"
         android:textColor="#fff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedGallery"
         app:layout_constraintStart_toStartOf="@+id/guideline43"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textViewFeedGallery"
         app:layout_constraintVertical_bias="0.511" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -177,9 +177,9 @@
         android:text="Camera"
         android:textColor="#fff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedCamera"
         app:layout_constraintStart_toStartOf="@+id/guideline44"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
+        app:layout_constraintTop_toTopOf="@+id/textViewFeedCamera" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline43"

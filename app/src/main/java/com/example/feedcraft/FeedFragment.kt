@@ -1,6 +1,7 @@
 package com.example.feedcraft
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,11 +15,13 @@ import com.example.feedcraft.databinding.FragmentFeedBinding
 
 class FeedFragment : Fragment() {
 
+
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
+    var intentMainAct: Intent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -39,8 +42,10 @@ class FeedFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.textViewEdit.setOnClickListener{
-            val action = FeedFragmentDirections.actionItemFeedToEditActivity()
-            findNavController().navigate(action)
+            //val action = FeedFragmentDirections.actionItemFeedToEditActivity()
+            //findNavController().navigate(action)
+            //ili mozda ovo gore?
+            startActivity(Intent(requireActivity(), EditActivity::class.java))
         }
         binding.imageViewButtonPlus.setOnClickListener{
             val action = FeedFragmentDirections.actionItemFeedToFeedDialogFragment()

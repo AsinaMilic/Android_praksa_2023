@@ -279,6 +279,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:thumb="@drawable/slider_circle"
+        android:thumbOffset="4dp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -336,5 +337,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter" />
+
+    <ImageView
+        android:id="@+id/imageViewToEdit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline19"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewHeader"
+        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

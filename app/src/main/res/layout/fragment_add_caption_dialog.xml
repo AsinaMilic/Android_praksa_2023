@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline34"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFeedGallery" />
 
     <TextView
         android:id="@+id/textViewCancelDelete"
@@ -97,7 +97,7 @@
         app:layout_constraintDimensionRatio="330:120"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFeedGallery" />
 
     <TextView
         android:id="@+id/textViewGallery"
@@ -125,7 +125,7 @@
         app:layout_constraintTop_toTopOf="@+id/textViewCancelDelete" />
 
     <ImageView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewFeedGallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/caption_holder"
@@ -178,18 +178,10 @@
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         app:fontFamily="@font/sourcesanspro_semibold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
-        app:layout_constraintEnd_toEndOf="@+id/textView11"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toTopOf="@+id/textView11" />
-
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch"
-        tools:layout_editor_absoluteX="172dp"
-        tools:layout_editor_absoluteY="85dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedGallery"
+        app:layout_constraintEnd_toEndOf="@+id/textViewFeedGallery"
+        app:layout_constraintStart_toStartOf="@+id/textViewFeedGallery"
+        app:layout_constraintTop_toTopOf="@+id/textViewFeedGallery" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,8 @@
 package com.example.feedcraft
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +28,7 @@ class DeleteDialogFragment : DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_delete_dialog, container, false)
 
         val layout = view?.findViewById<View>(R.id.delete_dialog)
-        val childLayout = view?.findViewById<View>(R.id.viewDelete)
+        val childLayout = view?.findViewById<View>(R.id.viewFeedDialog)
 
         layout?.setOnClickListener {
             dismiss()

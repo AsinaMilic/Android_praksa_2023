@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    
+
+    <!--permissions-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
 
     <application
@@ -13,7 +15,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.FeedCraft"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:name=".UIApplication">
         <activity
             android:name=".EditActivity"
             android:exported="false" />

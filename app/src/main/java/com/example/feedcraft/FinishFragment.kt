@@ -32,14 +32,15 @@ class FinishFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.imageViewDiscard.setOnClickListener{
-            val action = FinishFragmentDirections.actionFinishFragmentToItemFeed()
-            findNavController().navigate(action)
+            //val action = FinishFragmentDirections.actionFinishFragmentToItemFeed()
+            //findNavController().navigate(action)
+            activity?.finish()
 
         }
         binding.imageViewSave.setOnClickListener{
-            val action = FinishFragmentDirections.actionFinishFragmentToItemFeed()
-            findNavController().navigate(action)
-
+            //dismiss()
+            //finish()
+            activity?.finish()
         }
         binding.imageViewSchedule.setOnClickListener {
             val action = FinishFragmentDirections.actionFinishFragmentToScheduleReminderFragment()

@@ -25,9 +25,9 @@
         <action
             android:id="@+id/action_item_feed_to_deleteDialogFragment"
             app:destination="@id/deleteDialogFragment" />
-        <action
+       <!-- <action
             android:id="@+id/action_item_feed_to_editActivity"
-            app:destination="@id/editActivity" />
+            app:destination="@id/editActivity" />-->
     </fragment>
     <fragment
         android:id="@+id/item_settings"
@@ -44,14 +44,9 @@
         android:name="com.example.feedcraft.DeleteDialogFragment"
         android:label="fragment_delete_dialog"
         tools:layout="@layout/fragment_delete_dialog" />
-    <fragment
-        android:id="@+id/scheduleReminderFragment"
-        android:name="com.example.feedcraft.ScheduleReminderFragment"
-        android:label="fragment_schedule_reminder"
-        tools:layout="@layout/fragment_schedule_reminder" />
-    <activity
+    <!--<activity
         android:id="@+id/editActivity"
         android:name="com.example.feedcraft.EditActivity"
         android:label="activity_edit"
-        tools:layout="@layout/activity_edit" />
+        tools:layout="@layout/activity_edit" />-->
 </navigation>

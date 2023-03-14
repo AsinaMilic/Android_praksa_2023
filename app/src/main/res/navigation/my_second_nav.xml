@@ -27,12 +27,16 @@
         android:label="fragment_finish"
         tools:layout="@layout/fragment_finish" >
         <action
-            android:id="@+id/action_finishFragment_to_scheduleReminderFragment2"
-            app:destination="@id/scheduleReminderFragment2" />
+            android:id="@+id/action_finishFragment_to_scheduleReminderFragment"
+            app:destination="@id/scheduleReminderFragment" />
     </fragment>
     <fragment
-        android:id="@+id/scheduleReminderFragment2"
+        android:id="@+id/scheduleReminderFragment"
         android:name="com.example.feedcraft.ScheduleReminderFragment"
         android:label="fragment_schedule_reminder"
-        tools:layout="@layout/fragment_schedule_reminder" />
+        tools:layout="@layout/fragment_schedule_reminder" >
+        <action
+            android:id="@+id/action_scheduleReminderFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
 </navigation>
