@@ -95,8 +95,8 @@ class FeedDialogFragment : DialogFragment() {
             REQUEST_CAMERA -> if (resultCode == RESULT_OK) {
                 val extras: Bundle? = data?.extras
                 val imageBitmap = extras?.get("data") as Bitmap?
-                ((requireActivity().application) as UIApplication).tempBitmap = imageBitmap
-
+                //((requireActivity().application) as UIApplication).tempBitmap = imageBitmap
+                UIApplication.editedImage?.bitmap = imageBitmap!!
                 val intent = Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Camera")
                 startActivity(intent)
 
@@ -108,7 +108,7 @@ class FeedDialogFragment : DialogFragment() {
             REQUEST_GALLERY -> if (resultCode == RESULT_OK) {
                 val selectedImageUri: Uri? = data?.data
 
-                ((requireActivity().application) as UIApplication).imageUri = selectedImageUri
+                UIApplication.imageUri = selectedImageUri
                 val intent = Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery")
                 startActivity(intent)
 

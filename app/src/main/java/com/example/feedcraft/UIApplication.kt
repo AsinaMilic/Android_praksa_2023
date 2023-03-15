@@ -6,7 +6,11 @@ import android.net.Uri
 
 //this is on the highest level
 class UIApplication : Application() {
-    var imageUri: Uri? = null
-    var tempBitmap: Bitmap? = null
+    companion object {
+        var imageUri: Uri? = null
+        var tempBitmap: Bitmap? = null
+        var editedImage: Edits? = null
+    }
+
 
 }

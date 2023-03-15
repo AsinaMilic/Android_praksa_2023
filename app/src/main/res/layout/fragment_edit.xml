@@ -90,18 +90,18 @@
         app:layout_constraintStart_toStartOf="@+id/imageViewFinish"
         app:layout_constraintTop_toTopOf="@+id/guidelineTopOfBack" />
 
-    <ImageView
+    <TextView
         android:id="@+id/imageViewSave"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleY="1.6"
+        android:scaleY="1."
+        android:background="@drawable/header_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/header_bg" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/TopOfFooter"
@@ -117,14 +117,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline1vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageViewSave"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="0.148"
         app:srcCompat="@drawable/ico_caption" />
 
     <ImageView
@@ -134,15 +131,12 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
 
         app:layout_constraintEnd_toStartOf="@+id/guideline2vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="0.148"
         app:srcCompat="@drawable/ico_filter" />
 
     <ImageView
@@ -152,14 +146,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline3vertical"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="@+id/guideline2vertical"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="0.19"
         app:srcCompat="@drawable/ico_brightness" />
 
     <ImageView
@@ -169,13 +160,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewSave"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3vertical"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="0.096"
         app:srcCompat="@drawable/ico_saturation" />
 
     <ImageView
@@ -185,14 +174,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
         app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
-        app:layout_constraintVertical_bias="0.148"
         app:srcCompat="@drawable/ico_contrast" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -282,8 +268,10 @@
         android:thumbOffset="4dp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline19" />
+        app:layout_constraintTop_toTopOf="@+id/guideline19"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline19"
@@ -293,17 +281,21 @@
         app:layout_constraintGuide_percent="0.74" />
 
     <!--Na sta klikcemo:-->
+
     <View
         android:id="@+id/ViewCaption"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline1vertical"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/TopOfFooter" />
+        app:layout_constraintTop_toTopOf="@+id/TopOfFooter"
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/ViewFilter"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -342,10 +334,48 @@
         android:id="@+id/imageViewToEdit"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewCaption"
+        app:layout_constraintEnd_toEndOf="@+id/textViewCaption"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewCaption"
         app:layout_constraintTop_toBottomOf="@+id/viewHeader"
+        app:layout_constraintVertical_bias="0.0"
         tools:src="@tools:sample/avatars" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCaption"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/caption_holder"
+        android:gravity="center"
+        android:text="Add Caption ..."
+        android:textColor="@color/buttons_dark"
+        android:textSize="16sp"
+        app:autoSizeMaxTextSize="16sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:fontFamily="@font/sourcesanspro_semibold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBrightness"
+        app:layout_constraintDimensionRatio="470:79"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
+        app:layout_constraintTop_toBottomOf="@+id/viewHeader"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <TextView
+        android:id="@+id/textViewPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textSize="20sp"
+        android:textColor="@color/buttons_light"
+        app:layout_constraintBottom_toTopOf="@+id/TopOfFooter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
+        app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

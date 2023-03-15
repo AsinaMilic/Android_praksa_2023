@@ -209,5 +209,15 @@
         app:layout_constraintStart_toStartOf="@+id/imageViewMiddleButton"
         app:layout_constraintTop_toTopOf="@+id/imageViewMiddleButton" />
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewMiddleButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline23"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/guidelineBottomHeader"
+        tools:src="@tools:sample/avatars" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
