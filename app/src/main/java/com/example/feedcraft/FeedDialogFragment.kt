@@ -96,7 +96,7 @@ class FeedDialogFragment : DialogFragment() {
                 val extras: Bundle? = data?.extras
                 val imageBitmap = extras?.get("data") as Bitmap?
                 //((requireActivity().application) as UIApplication).tempBitmap = imageBitmap
-                UIApplication.editedImage?.bitmap = imageBitmap!!
+                UIApplication.tempBitmap = imageBitmap!!
                 val intent = Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Camera")
                 startActivity(intent)
 

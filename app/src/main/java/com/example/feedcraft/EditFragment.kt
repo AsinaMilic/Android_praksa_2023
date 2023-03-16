@@ -11,22 +11,24 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.feedcraft.databinding.FragmentEditBinding
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-
 
 class EditFragment :  Fragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var seekBar: SeekBar
     private lateinit var percentageTextView: TextView
-
-    private val viewModel: EditViewModel by viewModels()
+    private val viewModel: EditViewModel by activityViewModels() //no ViewModels!
+    private var brightnessSelected: Boolean = false
+    private var saturationSelected: Boolean = false
+    private var contrastSelected: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +67,7 @@ class EditFragment :  Fragment() {
 
         binding.imageViewFinish.setOnClickListener{
 
-            //val cameraImage = ((requireActivity().application) as UIApplication).tempBitmap
-            val cameraImage = UIApplication.editedImage?.bitmap
-           /* UIApplication.editedImage.bitmap = "zlj"*/
-            viewModel.setAnotherBitmapToLiveData(cameraImage!!)
-
-
+            val cameraImage = UIApplication.tempBitmap
 
             val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
             findNavController().navigate(action)
@@ -80,13 +77,6 @@ class EditFragment :  Fragment() {
             activity?.finish()
         }
 
-        //ovde upada
-        /*viewModel.bitmap.observe(viewLifecycleOwner){ newBitmap->
-            Toast.makeText(requireContext(), "Stigla je bitmapa u newBitmap?", Toast.LENGTH_LONG).show()
-            val a = 1
-            val b = 3
-        }*/
-
         val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
 
         if(cameraOrGallery == "Gallery") {
@@ -94,11 +84,71 @@ class EditFragment :  Fragment() {
             Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewToEdit)
         }
         else {
-            val cameraImage = UIApplication.editedImage?.bitmap
-            //Glide.with(requireActivity()).load(cameraImage).into(binding.imageViewToEdit)
-            binding.imageViewToEdit.setImageBitmap(cameraImage)
+            val cameraImage = UIApplication.tempBitmap
+            binding.imageViewToEdit.setImageBitmap(cameraImage) //Glide.with(requireActivity()).load(cameraImage).into(binding.imageViewToEdit)
         }
 
+        val filterView = binding.ViewFilter
+        filterView.setOnClickListener {
+            //binding.editOptions.isVisible = false
+            //binding.filterOptions.isVisible = true
+            binding.seekBar.isVisible = false
+            percentageTextView.isVisible = false
+        }
+
+        val brightnessView = binding.ViewBrightness
+        brightnessView.setOnClickListener {
+            openEditOptions()
+            setBrightnessSelected()
+            val brightnessValue = 25//editorViewModel.getCreationBrightness()
+            seekBar.progress = brightnessValue
+            percentageTextView.text = "$brightnessValue%"
+        }
+
+        val saturationView = binding.ViewSaturation
+        saturationView.setOnClickListener {
+            openEditOptions()
+            setSaturationSelected()
+            val saturationValue = 26//editorViewModel.getCreationSaturation()
+            seekBar.progress = saturationValue
+            percentageTextView.text = "$saturationValue%"
+        }
+
+        val constrastView = binding.ViewContrast
+        constrastView.setOnClickListener {
+            openEditOptions()
+            setContrastSelected()
+            val contrastValue = 27//editorViewModel.getCreationContrast()
+            seekBar.progress = contrastValue
+            percentageTextView.text = "$contrastValue%"
+        }
+
+
+    }
+
+    private fun openEditOptions() {
+        //binding.editOptions.isVisible = true
+        binding.seekBar.isVisible = true
+        percentageTextView.isVisible = true
+        //binding.filterOptions.isVisible = false
+    }
+
+    private fun setBrightnessSelected(){
+        brightnessSelected = true
+        saturationSelected = false
+        contrastSelected = false
+    }
+
+    private fun setSaturationSelected(){
+        brightnessSelected = false
+        saturationSelected = true
+        contrastSelected = false
+    }
+
+    private fun setContrastSelected(){
+        brightnessSelected = false
+        saturationSelected = false
+        contrastSelected = true
     }
 
 }

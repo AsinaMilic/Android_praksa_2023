@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <ImageView
         android:id="@+id/imageViewCaption"
@@ -278,7 +278,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.74" />
+        app:layout_constraintGuide_percent="0.77" />
 
     <!--Na sta klikcemo:-->
 
@@ -359,7 +359,7 @@
         app:autoSizeTextType="uniform"
         app:fontFamily="@font/sourcesanspro_semibold"
         app:layout_constraintBottom_toBottomOf="@+id/textViewBrightness"
-        app:layout_constraintDimensionRatio="470:79"
+        app:layout_constraintDimensionRatio="470:70"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline1vertical"

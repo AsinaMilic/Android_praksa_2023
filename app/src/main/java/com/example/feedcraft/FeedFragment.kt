@@ -28,7 +28,7 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -42,9 +42,6 @@ class FeedFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.textViewEdit.setOnClickListener{
-            //val action = FeedFragmentDirections.actionItemFeedToEditActivity()
-            //findNavController().navigate(action)
-            //ili mozda ovo gore?
             startActivity(Intent(requireActivity(), EditActivity::class.java))
         }
         binding.imageViewButtonPlus.setOnClickListener{
@@ -52,8 +49,6 @@ class FeedFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
-
 
 
 }

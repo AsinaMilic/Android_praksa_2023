@@ -8,6 +8,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,6 +19,19 @@
         android:theme="@style/Theme.FeedCraft"
         tools:targetApi="31"
         android:name=".UIApplication">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            android:authorities="${applicationId}">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths"/>
+
+        </provider>
+
         <activity
             android:name=".EditActivity"
             android:exported="false" />

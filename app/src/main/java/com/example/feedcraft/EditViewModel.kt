@@ -1,6 +1,14 @@
 package com.example.feedcraft
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,28 +17,14 @@ import java.io.File
 import java.io.FileOutputStream
 
 class EditViewModel: ViewModel() {
-    var bitmap: MutableLiveData<Bitmap> = MutableLiveData<Bitmap>(null)
+    val _message: MutableLiveData<String> = MutableLiveData()
+    val message: LiveData<String>
+        get() = _message
 
-
-
-    /*public fun getBitmap(): MutableLiveData<Bitmap> {
-        return bitmap
-
-    }*/
-    fun getMapicu(): MutableLiveData<Bitmap> {
-        return bitmap
-    }
-    fun setAnotherBitmapToLiveData(bitMapToReplaceWith: Bitmap){
-        bitmap.value = bitMapToReplaceWith
-    }
-
-
-    val message: MutableLiveData<String> = MutableLiveData("")
     fun setAnotherValueToLiveData(messageToReplaceWith:String){
-        message.value = messageToReplaceWith
+        _message.value = messageToReplaceWith
 
     }
-
 
     fun saveBitmap(bitmap: Bitmap, filePath: String, fileName: String): File {
 
@@ -51,6 +45,31 @@ class EditViewModel: ViewModel() {
         fo.close()
 
         return f
+    }
+
+    fun shareImage(intent: Intent, context: Context?){
+        var uri:Uri? = UIApplication.imageUri //Uri from gallery
+
+        val cameraOrGallery: String = intent.extras?.getString("CameraOrGallery").toString()
+        if(cameraOrGallery == "Camera") {
+            val filePath = context?.filesDir.toString() + File.separator + "saved_creations" + File.separator + "creation_1.png"
+            uri = context?.let { FileProvider.getUriForFile(it, BuildConfig.APPLICATION_ID, File(filePath)) }
+        }
+
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, uri)
+            type = "image/png"
+        }
+
+        try {
+            context?.startActivity(sendIntent)
+        }catch(activityNotFoundEx: ActivityNotFoundException){
+            val text = "something bad happened! :("
+            val duration = Toast.LENGTH_SHORT
+            Toast.makeText(context, text, duration).show()
+        }
+
     }
 
 

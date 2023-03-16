@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline34"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFeedGallery" />
+        app:layout_constraintTop_toTopOf="@+id/guideline35" />
 
     <TextView
         android:id="@+id/textViewCancelDelete"
@@ -97,7 +97,7 @@
         app:layout_constraintDimensionRatio="330:120"
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFeedGallery" />
+        app:layout_constraintTop_toTopOf="@+id/guideline35" />
 
     <TextView
         android:id="@+id/textViewGallery"
@@ -124,19 +124,18 @@
         app:layout_constraintStart_toStartOf="@+id/textViewCancelDelete"
         app:layout_constraintTop_toTopOf="@+id/textViewCancelDelete" />
 
-    <ImageView
+    <!--<EditText
         android:id="@+id/textViewFeedGallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/caption_holder"
-        android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/guideline35"
 
         app:layout_constraintEnd_toStartOf="@+id/guideline40"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline39"
         app:layout_constraintTop_toTopOf="@+id/guideline38"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline35"
@@ -166,11 +165,14 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.88" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add a Caption..."
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/caption_holder"
+        android:hint="Add a Caption..."
+        android:gravity="center"
+        android:textColorHint="@color/icon_text_dark"
         android:textColor="@color/icon_text_dark"
         android:textSize="20sp"
         app:autoSizeMaxTextSize="20sp"
@@ -178,10 +180,10 @@
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         app:fontFamily="@font/sourcesanspro_semibold"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedGallery"
-        app:layout_constraintEnd_toEndOf="@+id/textViewFeedGallery"
-        app:layout_constraintStart_toStartOf="@+id/textViewFeedGallery"
-        app:layout_constraintTop_toTopOf="@+id/textViewFeedGallery" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline35"
+        app:layout_constraintEnd_toStartOf="@+id/guideline40"
+        app:layout_constraintStart_toStartOf="@+id/guideline39"
+        app:layout_constraintTop_toTopOf="@+id/guideline38" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

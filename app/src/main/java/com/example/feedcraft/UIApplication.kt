@@ -9,8 +9,6 @@ class UIApplication : Application() {
     companion object {
         var imageUri: Uri? = null
         var tempBitmap: Bitmap? = null
-        var editedImage: Edits? = null
     }
-
 
 }

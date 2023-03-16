@@ -49,9 +49,7 @@ class SettingsFragment : Fragment() {
 
         binding.ViewRate.setOnClickListener{
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                //data = Uri.parse("https://play.google.com/store/apps/id=$ourDev")
                 data = Uri.parse("https://play.google.com/store/search?q=$ourDev")
-                //http://play.google.com/store/search?q=maps&c=apps
                 setPackage("com.android.vending")
             }
             try {
