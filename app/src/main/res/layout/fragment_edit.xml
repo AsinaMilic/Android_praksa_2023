@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.87" />
+        app:layout_constraintGuide_percent="0.88" />
 
     <ImageView
         android:id="@+id/imageViewCaption"
@@ -271,6 +271,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline19"
+        android:visibility="gone"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -278,7 +279,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.77" />
+        app:layout_constraintGuide_percent="0.76" />
 
     <!--Na sta klikcemo:-->
 
@@ -367,6 +368,7 @@
         app:layout_constraintVertical_bias="0.53" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/textViewPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -376,6 +378,17 @@
         app:layout_constraintBottom_toTopOf="@+id/TopOfFooter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
+        app:layout_constraintTop_toTopOf="@+id/guideline19" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filterRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

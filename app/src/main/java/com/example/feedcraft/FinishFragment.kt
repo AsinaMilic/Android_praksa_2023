@@ -55,9 +55,10 @@ class FinishFragment : Fragment() {
         }
         binding.imageViewSave.setOnClickListener{
             val bitmap = UIApplication.tempBitmap
-            if (bitmap != null)
+            if (bitmap != null){
                 viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation_1.png")
-
+                viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation_1.png",200)
+            }
             activity?.finish()
         }
         binding.imageViewSchedule.setOnClickListener {

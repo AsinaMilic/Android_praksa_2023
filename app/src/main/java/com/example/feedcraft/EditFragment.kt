@@ -1,23 +1,23 @@
 package com.example.feedcraft
 
-import android.content.Intent
-import android.content.Intent.getIntent
-import android.content.Intent.getIntentOld
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.feedcraft.databinding.FragmentEditBinding
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.feedcraft.Adapter.FilterAdapter
 
 class EditFragment :  Fragment() {
 
@@ -30,9 +30,13 @@ class EditFragment :  Fragment() {
     private var saturationSelected: Boolean = false
     private var contrastSelected: Boolean = false
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var filterList: ArrayList<FilterModel>
+    private lateinit var filterAdapter: FilterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -42,6 +46,7 @@ class EditFragment :  Fragment() {
     ): View? {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
 
+        init()
         seekBar = binding.seekBar
         percentageTextView = binding.textViewPercentage
         seekBar.max = 100
@@ -124,6 +129,49 @@ class EditFragment :  Fragment() {
         }
 
 
+    }
+
+    private fun init(){
+        recyclerView = binding.filterRecycleView
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        filterList = ArrayList()
+
+        addDataToList()
+
+        filterAdapter = FilterAdapter(filterList)
+        recyclerView.adapter = filterAdapter
+    }
+
+    private fun addDataToList(){
+        val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
+        var previewBitMap: Bitmap
+
+        if(cameraOrGallery == "Gallery") {
+            val selectedImageFromGalleryUri = UIApplication.imageUri
+            previewBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImageFromGalleryUri) //valjda ce radi
+            //Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewToEdit)
+        }
+        else {
+            previewBitMap = UIApplication.tempBitmap!!
+        }
+
+        //val scaledBitmap = Bitmap.createScaledBitmap(bitmap, size, size, false) //mogo bi da je skaliram
+
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(previewBitMap,"Normal"))
     }
 
     private fun openEditOptions() {

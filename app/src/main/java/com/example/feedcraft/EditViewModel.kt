@@ -31,6 +31,8 @@ class EditViewModel: ViewModel() {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
 
+        //val previewBitmap: Bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true) //true or false idk
+
         val dir = File(filePath)
 
         if (!dir.exists()) {
@@ -38,6 +40,28 @@ class EditViewModel: ViewModel() {
         }
 
         val f = File(dir, fileName)
+        f.createNewFile()
+
+        val fo = FileOutputStream(f)
+        fo.write(bytes.toByteArray())
+        fo.close()
+
+        return f
+    }
+    //TODO merge these 2 functions
+    fun saveBitmapPreview(bitmap: Bitmap, filePath: String, fileName: String, size: Int): File {
+
+        val bytes = ByteArrayOutputStream()
+        val scaledBitmap = Bitmap.createScaledBitmap(bitmap, size, size, false)
+        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+
+        val dir = File(filePath)
+
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+        val newFileName:String = System.currentTimeMillis().toString()+"_"+fileName
+        val f = File(dir, newFileName)
         f.createNewFile()
 
         val fo = FileOutputStream(f)

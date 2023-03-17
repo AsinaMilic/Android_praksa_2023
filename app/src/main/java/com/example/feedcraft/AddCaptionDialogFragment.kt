@@ -32,7 +32,7 @@ class AddCaptionDialogFragment : DialogFragment() {
             dismiss()
         }
         childLayout?.setOnClickListener {
-            // Ovdje dodajte željenu akciju koju želite obaviti kada se klikne na unutarnji layout
+            // Ovde dodajte željenu akciju koju želite obaviti kada se klikne na unutrasnji layout
             dismiss()
         }
 
