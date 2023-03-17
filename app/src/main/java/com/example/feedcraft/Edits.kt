@@ -2,7 +2,7 @@ package com.example.feedcraft
 
 import android.graphics.Bitmap
 
-class Edits(var uri:String,
+data class Edits(var uri:String,
             var bitmap: Bitmap,
             var caption: String,
             var filter: String,

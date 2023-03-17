@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme_Dark.FeedCraft" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/main_color_dark</item>
-        <item name="colorPrimaryVariant">@color/bg_color_dark</item>
-        <item name="colorOnPrimary">@color/icon_text_dark</item>
+        <item name="colorPrimary">@color/main_color_light</item>
+        <item name="colorPrimaryVariant">@color/bg_color_light</item>
+        <item name="colorOnPrimary">@color/icon_text_light</item>
         <!-- Secondary brand color. -->
         <!--<item name="colorSecondary">@color/main_color_light</item>
         <item name="colorSecondaryVariant">@color/bg_color_light</item>

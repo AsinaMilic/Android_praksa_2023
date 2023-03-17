@@ -6,11 +6,11 @@
     <color name="icon_text_light">#4E3D7B</color>
     <color name="buttons_light">#6750A4</color>
 
-    <color name="main_color_dark">#B03873</color>
+    <!--<color name="main_color_dark">#B03873</color>
     <color name="bg_color_dark">#332F3E</color>
     <color name="header_footer_dark">#262330</color>
     <color name="icon_text_dark">#C0B7CC</color>
-    <color name="buttons_dark">#B197F5</color>
+    <color name="buttons_dark">#B197F5</color>-->
 
     <color name="transparent"> #40000000</color>
 

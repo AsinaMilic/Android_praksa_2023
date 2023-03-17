@@ -38,14 +38,13 @@ class FeedDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val view = inflater.inflate(R.layout.fragment_feed_dialog, container, false)
 
         val parentLayout = view?.findViewById<View>(R.id.parent_feed_dialog)
         val feedDialog = view?.findViewById<View>(R.id.viewFeedDialog)
 
-        //val imageView = view?.findViewById<ImageView>(R.id.image)
+
         val btnGallery = view?.findViewById<TextView>(R.id.textViewFeedGallery)
         val btnCamera = view?.findViewById<TextView>(R.id.textViewFeedCamera)
 
@@ -78,7 +77,7 @@ class FeedDialogFragment : DialogFragment() {
         return view
     }
 
-    override fun onStart() {
+    override fun onStart() { //forcing a layout to be fullscreen otherwise fragment wont be fullscreen
         super.onStart()
 
         dialog?.window?.setLayout(

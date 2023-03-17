@@ -30,6 +30,7 @@ class EditFragment :  Fragment() {
     private var saturationSelected: Boolean = false
     private var contrastSelected: Boolean = false
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,7 +51,6 @@ class EditFragment :  Fragment() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
