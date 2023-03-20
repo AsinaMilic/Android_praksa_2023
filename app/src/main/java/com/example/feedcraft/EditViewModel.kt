@@ -5,13 +5,21 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.feedcraft.Adapter.FilterAdapter
+import com.example.feedcraft.databinding.FragmentEditBinding
+import jp.co.cyberagent.android.gpuimage.GPUImage
+import jp.co.cyberagent.android.gpuimage.filter.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -20,6 +28,13 @@ class EditViewModel: ViewModel() {
     val _message: MutableLiveData<String> = MutableLiveData()
     val message: LiveData<String>
         get() = _message
+
+    val captionText: MutableLiveData<String> = MutableLiveData()
+
+    fun setCaptionText(textToReplaceWith: String){
+        captionText.value = textToReplaceWith
+    }
+
 
     fun setAnotherValueToLiveData(messageToReplaceWith:String){
         _message.value = messageToReplaceWith
@@ -94,6 +109,60 @@ class EditViewModel: ViewModel() {
             Toast.makeText(context, text, duration).show()
         }
 
+    }
+
+     fun addDataToList(activity: FragmentActivity, context: Context?, filterList: ArrayList<FilterModel> ){
+        val cameraOrGallery: String = activity.intent?.extras?.getString("CameraOrGallery").toString()
+        val previewBitMap: Bitmap
+
+        if(cameraOrGallery == "Gallery") {
+            val selectedImageFromGalleryUri = UIApplication.imageUri
+            previewBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImageFromGalleryUri) //valjda ce radi
+            //Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewToEdit)
+        }
+        else {
+            previewBitMap = UIApplication.tempBitmap!!
+        }
+
+        val filters = listOf(
+            GPUImageGrayscaleFilter(),
+            GPUImageColorBalanceFilter(),
+            GPUImageSepiaToneFilter(),
+            GPUImageSwirlFilter(),
+            GPUImageContrastFilter(),
+            GPUImageEmbossFilter(),
+            GPUImagePosterizeFilter(),
+            GPUImageVibranceFilter(),
+            GPUImageLaplacianFilter(),
+            GPUImageColorInvertFilter()
+        )
+        val filteredBitmaps = applyFilterToBitmap(context, previewBitMap, filters)
+
+
+        filterList.add(FilterModel(previewBitMap,"Normal"))
+        filterList.add(FilterModel(filteredBitmaps[0],"GrayScale"))
+        filterList.add(FilterModel(filteredBitmaps[1],"Balance"))
+        filterList.add(FilterModel(filteredBitmaps[2],"Sepia"))
+
+        filterList.add(FilterModel(filteredBitmaps[3],"Swirl"))
+        filterList.add(FilterModel(filteredBitmaps[4],"Contrast"))
+        filterList.add(FilterModel(filteredBitmaps[5],"Emboss"))
+        filterList.add(FilterModel(filteredBitmaps[6],"Posterize"))
+
+        filterList.add(FilterModel(filteredBitmaps[7],"Vibrance"))
+        filterList.add(FilterModel(filteredBitmaps[8],"Laplacian"))
+        filterList.add(FilterModel(filteredBitmaps[9],"Invert"))
+    }
+
+    private fun applyFilterToBitmap(context: Context?,bitmap: Bitmap, filters: List<GPUImageFilter>): ArrayList<Bitmap> {
+        val filteredImageList = ArrayList<Bitmap>()
+        val gpuImage = GPUImage(context)
+        gpuImage.setImage(bitmap)
+        for (filter in filters) {
+            gpuImage.setFilter(filter)
+            filteredImageList.add(gpuImage.bitmapWithFilterApplied)
+        }
+        return filteredImageList
     }
 
 

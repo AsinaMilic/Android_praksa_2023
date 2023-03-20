@@ -89,7 +89,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline35" />
 
     <TextView
-        android:id="@+id/textViewCancelDelete"
+        android:id="@+id/textViewCancelCaption"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button_full"
@@ -119,10 +119,10 @@
         android:text="Cancel"
         android:textColor="#fff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewCancelDelete"
-        app:layout_constraintEnd_toEndOf="@+id/textViewCancelDelete"
-        app:layout_constraintStart_toStartOf="@+id/textViewCancelDelete"
-        app:layout_constraintTop_toTopOf="@+id/textViewCancelDelete" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewCancelCaption"
+        app:layout_constraintEnd_toEndOf="@+id/textViewCancelCaption"
+        app:layout_constraintStart_toStartOf="@+id/textViewCancelCaption"
+        app:layout_constraintTop_toTopOf="@+id/textViewCancelCaption" />
 
     <!--<EditText
         android:id="@+id/textViewFeedGallery"
@@ -166,7 +166,7 @@
         app:layout_constraintGuide_percent="0.88" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/textView13"
+        android:id="@+id/textViewDialogCaption"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/caption_holder"
