@@ -10,12 +10,12 @@
     <com.google.android.material.imageview.ShapeableImageView
         app:shapeAppearanceOverlay="@style/RoundedCorners"
         android:id="@+id/filterImageView"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:padding="5dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFilter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,13 +23,13 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/filterImageView1"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/filter_selected"
         android:padding="1dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFilter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,11 +38,11 @@
         app:strokeWidth="2dp" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="10sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

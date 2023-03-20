@@ -8,10 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 
 
 class AddCaptionDialogFragment : DialogFragment() {
+    private val viewModel: EditViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +33,27 @@ class AddCaptionDialogFragment : DialogFragment() {
 
         val parentLayout = view?.findViewById<View>(R.id.add_caption_dialog)
         val childLayout = view?.findViewById<View>(R.id.viewAddCaptionDialog)
+        val textDialog = view?.findViewById<TextView>(R.id.textViewDialogCaption)
+        val okBtn = view?.findViewById<TextView>(R.id.textViewOK)
+        val cancelBtn = view?.findViewById<TextView>(R.id.textViewCancelCaption)
+
         parentLayout?.setOnClickListener {
             dismiss()
         }
-        childLayout?.setOnClickListener {
-            // Ovde dodajte željenu akciju koju želite obaviti kada se klikne na unutrasnji layout
-            dismiss()
+
+        textDialog?.setOnClickListener {
+
         }
+        okBtn?.setOnClickListener {
+            viewModel.setCaptionText(textDialog?.text.toString())
+            findNavController().navigateUp()
+        }
+        cancelBtn?.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        /*childLayout?.setOnClickListener {
+            //dismiss()
+        }*/
 
         dialog?.setCanceledOnTouchOutside(true)
 
