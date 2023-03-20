@@ -2,6 +2,8 @@ package com.example.feedcraft
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.feedcraft.databinding.FragmentFinishBinding
 import java.io.File
+import java.io.InputStream
 
 
 class FinishFragment : Fragment() {
@@ -54,11 +57,19 @@ class FinishFragment : Fragment() {
             activity?.finish()
         }
         binding.imageViewSave.setOnClickListener{
-            val bitmap = UIApplication.tempBitmap
-            if (bitmap != null){
-                viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation_1.png")
-                viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation_1.png",200)
-            }
+            //if(cameraOrGallery == "Gallery") {
+                var bitmap = UIApplication.tempBitmap
+                if (bitmap != null){
+                    viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation.png")
+                    viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation.png",200)
+                }
+                else{
+                    val uri: Uri? = UIApplication.imageUri
+                    val inputStream: InputStream? = uri?.let { it1 -> context?.contentResolver?.openInputStream(it1) }
+                    bitmap = BitmapFactory.decodeStream(inputStream)
+                    viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation.png")
+                    viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation.png",200)
+                }
             activity?.finish()
         }
         binding.imageViewSchedule.setOnClickListener {

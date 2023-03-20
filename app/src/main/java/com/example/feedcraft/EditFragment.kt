@@ -69,6 +69,7 @@ class EditFragment :  Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imageViewToEdit.setDrawingCacheEnabled(true); //this thing so i can get a bitmap from imageViewToEdit
 
         binding.imageViewFinish.setOnClickListener{
             val cameraImage = UIApplication.tempBitmap
@@ -94,9 +95,10 @@ class EditFragment :  Fragment() {
         viewModel.captionText.observe(viewLifecycleOwner) {
                 caption -> binding.textViewCaption.text = caption
 
-            setGpuImage()
-
-            val textBitmap = Bitmap.createBitmap(binding.imageViewToEdit.width, binding.imageViewToEdit.height, Bitmap.Config.ARGB_8888)
+            gpuImage = setGpuImage()
+            val widthBitmap = binding.imageViewToEdit.getDrawingCache().width
+            val heightBitmap= binding.imageViewToEdit.getDrawingCache().height
+            val textBitmap = Bitmap.createBitmap(widthBitmap, heightBitmap , Bitmap.Config.ARGB_8888)
             val canvas = Canvas(textBitmap)
             val textPaint = Paint().apply {
                 color = Color.BLUE
@@ -112,7 +114,7 @@ class EditFragment :  Fragment() {
             gpuImage.setFilter(blendFilter)
 
             binding.imageViewToEdit.setImageBitmap(gpuImage.bitmapWithFilterApplied)
-            TODO("sacuvati promene nad slikom")
+
         }
 
         binding.ViewCaption.setOnClickListener{
@@ -220,8 +222,8 @@ class EditFragment :  Fragment() {
     }
     private fun init(){
         recyclerView = binding.filterRecycleView
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        recyclerView.setHasFixedSize(true)             //org RequireContext()
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         filterList = ArrayList()
 
         viewModel.addDataToList(requireActivity(), context, filterList)
@@ -230,6 +232,7 @@ class EditFragment :  Fragment() {
             val clickedImage = filterList[position].imageBitmap
             binding.imageViewToEdit.setImageBitmap(clickedImage)
         }
+
         recyclerView.adapter = filterAdapter
     }
 

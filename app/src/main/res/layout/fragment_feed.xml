@@ -25,6 +25,7 @@
 
     <ImageView
         android:id="@+id/imageViewGirl1"
+        android:visibility="invisible"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/illustration_empty"
@@ -116,7 +117,7 @@
         app:layout_constraintGuide_percent="0.7" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageViewFeedEdit"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -125,15 +126,15 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/btn_main_empty"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
-        app:layout_constraintDimensionRatio=""
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintDimensionRatio="440:170"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewFeedColorCode"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageViewFeedColorCode"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -141,14 +142,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/btn_main_empty"
+        app:layout_constraintDimensionRatio="440:170"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewFeedDelete"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFeedEdit"
         app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/imageViewFeedDelete"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -157,11 +159,11 @@
         android:layout_marginBottom="8dp"
         android:src="@drawable/btn_main_empty"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintDimensionRatio="440:170"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/guideline17"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/imageViewFeedColorCode"
+        app:layout_constraintTop_toTopOf="@+id/guideline17" />
 
     <TextView
         android:id="@+id/textViewEdit"
@@ -170,10 +172,10 @@
         android:textColor="@color/icon_text_light"
         android:textSize="16sp"
         android:text="Edit"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFeedEdit"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewFeedEdit"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFeedEdit"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFeedEdit" />
 
     <TextView
         android:id="@+id/textViewColorCode"
@@ -182,10 +184,10 @@
         android:textColor="@color/icon_text_light"
         android:text="Color Code"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFeedColorCode"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewFeedColorCode"
+        app:layout_constraintStart_toStartOf="@+id/imageViewFeedColorCode"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFeedColorCode" />
 
     <TextView
         android:id="@+id/textViewDelete"
@@ -194,20 +196,38 @@
         android:text="Delete"
         android:textColor="@color/icon_text_light"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFeedDelete"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+        app:layout_constraintStart_toStartOf="@+id/imageViewFeedDelete"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFeedDelete" />
 
     <ImageView
         android:id="@+id/imageViewButtonPlus"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/btn_plus"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toTopOf="@+id/guideline22" />
+        app:layout_constraintTop_toTopOf="@+id/guideline17" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewGallery"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineBottomHeader" />
+
+    <!--<View
+        android:id="@+id/viewButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline17" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

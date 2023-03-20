@@ -53,8 +53,8 @@ class EditViewModel: ViewModel() {
         if (!dir.exists()) {
             dir.mkdir()
         }
-
-        val f = File(dir, fileName)
+        val newFileName:String = System.currentTimeMillis().toString()+"_"+fileName
+        val f = File(dir, newFileName)
         f.createNewFile()
 
         val fo = FileOutputStream(f)
