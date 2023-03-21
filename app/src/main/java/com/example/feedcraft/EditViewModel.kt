@@ -30,11 +30,18 @@ class EditViewModel: ViewModel() {
         get() = _message
 
     val captionText: MutableLiveData<String> = MutableLiveData()
+    var dominantColor: MutableLiveData<Int> = MutableLiveData()
+
+    var addPictureNotification: Boolean = false
 
     fun setCaptionText(textToReplaceWith: String){
         captionText.value = textToReplaceWith
     }
-
+    fun getDominantColor(bitmap: Bitmap): Int{
+        val _dominantColor = bitmap.getPixel(0, 0)
+        dominantColor.value = _dominantColor
+        return _dominantColor
+    }
 
     fun setAnotherValueToLiveData(messageToReplaceWith:String){
         _message.value = messageToReplaceWith

@@ -1,38 +1,41 @@
 package com.example.feedcraft.Adapter
 
-import android.graphics.Bitmap
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.feedcraft.EditViewModel
 import com.example.feedcraft.FilterModel
 import com.example.feedcraft.GalleryModel
 import com.example.feedcraft.R
 
 
 
-class GalleryAdapter(private val galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int, active: Boolean) -> Unit) :
+class GalleryAdapter(context: Context?, private val galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int, active: Boolean) -> Unit) :
     RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
     companion object{
         var oneIsSelected: Boolean = false
         var itemSelected: GalleryModel? = null
     }
+    //val viewModel = ViewModelProvider(context as ViewModelStoreOwner)[EditViewModel::class.java]
+
 
     class GalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val galleryImageView: ImageView = itemView.findViewById(R.id.imageItemGallery)
-        val galleryImageColor: ImageView = itemView.findViewById(R.id.imageGalleryColor)
+        var galleryImageColor: ImageView = itemView.findViewById(R.id.imageColorCode)
         val checkmark: ImageView = itemView.findViewById(R.id.imageViewCheckmark)
 
         fun bind(position: Int, galleryItem: GalleryModel, clickListener: (position: Int, active: Boolean) -> Unit) {
             galleryImageView.setOnClickListener {
-                //galleryItem.isActive = !galleryItem.isActive
-
-                if(!galleryItem.isActive && !oneIsSelected && itemSelected==null){
+                if(!galleryItem.isActive && !oneIsSelected && itemSelected == null){
                     checkmark.isVisible = true
                     oneIsSelected = true
                     itemSelected = galleryItem
@@ -44,8 +47,7 @@ class GalleryAdapter(private val galleryList: MutableList<GalleryModel>, private
                     itemSelected = null
                     galleryItem.isActive = false
                 }
-
-                clickListener(position, galleryItem.isActive) // Pass the updated value of isActive
+                clickListener(position, galleryItem.isActive)
             }
         }
     }
@@ -63,6 +65,7 @@ class GalleryAdapter(private val galleryList: MutableList<GalleryModel>, private
         val galleryItem: GalleryModel = galleryList[position]
         holder.bind(position, galleryItem, clickListener)
         holder.galleryImageView.setImageBitmap(galleryItem.imageBitmap)
+        holder.galleryImageColor.setBackgroundColor(galleryItem.dominantColor)
         //ovde ne treba da postavim boju???
     }
 

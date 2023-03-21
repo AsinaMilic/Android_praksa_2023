@@ -127,13 +127,16 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.38" />
 
-    <TextView
+    <EditText
         android:id="@+id/imageViewScheduleMessage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/schedule_message_icon"
         android:padding="15dp"
         android:hint="Type something..."
+        android:textColor="@color/buttons_light"
+        android:textColorHint="@color/buttons_light"
+        android:gravity="start"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline29"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
@@ -174,8 +177,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline28"
         app:layout_constraintTop_toTopOf="@+id/guideline29" />
 
-    <ImageView
-        android:id="@+id/imageView10"
+    <CheckBox
+        android:id="@+id/checkboxChecked"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ico_check_off"
@@ -202,7 +205,7 @@
         app:layout_constraintGuide_percent="0.35" />
 
     <TextView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewDate"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -227,7 +230,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline31" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textViewTime"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

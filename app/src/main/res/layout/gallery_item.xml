@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:padding="7dp"
+    android:id="@+id/LCGalleryItem">
 
     <ImageView
-        android:id="@+id/imageGalleryColor"
+        android:id="@+id/imageColorCode"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="Gallery image"
@@ -22,11 +23,11 @@
         android:id="@+id/imageItemGallery"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageGalleryColor"
-        app:layout_constraintEnd_toEndOf="@+id/imageGalleryColor"
-        app:layout_constraintStart_toStartOf="@+id/imageGalleryColor"
-        app:layout_constraintTop_toTopOf="@+id/imageGalleryColor"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageColorCode"
+        app:layout_constraintEnd_toEndOf="@+id/imageColorCode"
+        app:layout_constraintStart_toStartOf="@+id/imageColorCode"
+        app:layout_constraintTop_toTopOf="@+id/imageColorCode"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
@@ -36,9 +37,9 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guideline45"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="@+id/imageGalleryColor"
+        app:layout_constraintEnd_toEndOf="@+id/imageColorCode"
         app:layout_constraintStart_toStartOf="@+id/guideline47"
-        app:layout_constraintTop_toTopOf="@+id/imageGalleryColor"
+        app:layout_constraintTop_toTopOf="@+id/imageColorCode"
         app:srcCompat="@drawable/ico_check_on" />
 
     <androidx.constraintlayout.widget.Guideline
