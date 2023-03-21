@@ -32,19 +32,19 @@ class GalleryAdapter(private val galleryList: MutableList<GalleryModel>, private
             galleryImageView.setOnClickListener {
                 //galleryItem.isActive = !galleryItem.isActive
 
-                if(galleryItem.isActive && !oneIsSelected && itemSelected==null){
+                if(!galleryItem.isActive && !oneIsSelected && itemSelected==null){
                     checkmark.isVisible = true
                     oneIsSelected = true
                     itemSelected = galleryItem
+                    galleryItem.isActive = true
                 }
                 else if(galleryItem.isActive && oneIsSelected && itemSelected == galleryItem){
                     checkmark.isVisible = false
                     oneIsSelected = false
                     itemSelected = null
+                    galleryItem.isActive = false
                 }
-                else if(galleryItem.isActive && oneIsSelected && itemSelected != galleryItem){
-                    //nista ovo
-                }
+
                 clickListener(position, galleryItem.isActive) // Pass the updated value of isActive
             }
         }
