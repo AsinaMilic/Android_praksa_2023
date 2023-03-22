@@ -1,16 +1,11 @@
 package com.example.feedcraft
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,11 +20,6 @@ class FinishFragment : Fragment() {
     private var _binding: FragmentFinishBinding? = null
     private val binding get() = _binding!!
     private val viewModel: EditViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,18 +48,23 @@ class FinishFragment : Fragment() {
         }
         binding.imageViewSave.setOnClickListener{
             //if(cameraOrGallery == "Gallery") {
+                val firstPath: String = context?.filesDir.toString() + File.separator
+                val fileName: String = System.currentTimeMillis().toString()
                 var bitmap = UIApplication.tempBitmap
                 if (bitmap != null){
-                    viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation.png")
-                    viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation.png",200)
+                    viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
+                    viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews", 200, fileName)
                 }
                 else{
                     val uri: Uri? = UIApplication.imageUri
                     val inputStream: InputStream? = uri?.let { it1 -> context?.contentResolver?.openInputStream(it1) }
                     bitmap = BitmapFactory.decodeStream(inputStream)
-                    viewModel.saveBitmap(bitmap, context?.filesDir.toString() + File.separator + "saved_creations", "creation.png")
-                    viewModel.saveBitmapPreview(bitmap, context?.filesDir.toString() + File.separator + "creation_previews", "creation.png",200)
+                    viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
+                    viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews",200, fileName)
                 }
+
+            UIApplication.galleryListChanged = true
+            viewModel.save2SharedPreferences(requireContext(),"hardcoded_caption", fileName)
             activity?.finish()
         }
         binding.imageViewSchedule.setOnClickListener {
@@ -81,6 +76,7 @@ class FinishFragment : Fragment() {
         }
 
     }
+
 
 
 }

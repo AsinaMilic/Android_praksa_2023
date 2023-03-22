@@ -7,17 +7,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.feedcraft.Adapter.FilterAdapter
-import com.example.feedcraft.databinding.FragmentEditBinding
+import com.google.gson.Gson
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.filter.*
 import java.io.ByteArrayOutputStream
@@ -30,25 +25,21 @@ class EditViewModel: ViewModel() {
         get() = _message
 
     val captionText: MutableLiveData<String> = MutableLiveData()
-    var dominantColor: MutableLiveData<Int> = MutableLiveData()
+
 
     var addPictureNotification: Boolean = false
 
     fun setCaptionText(textToReplaceWith: String){
         captionText.value = textToReplaceWith
     }
-    fun getDominantColor(bitmap: Bitmap): Int{
-        val _dominantColor = bitmap.getPixel(0, 0)
-        dominantColor.value = _dominantColor
-        return _dominantColor
-    }
+
 
     fun setAnotherValueToLiveData(messageToReplaceWith:String){
         _message.value = messageToReplaceWith
 
     }
 
-    fun saveBitmap(bitmap: Bitmap, filePath: String, fileName: String): File {
+    fun saveBitmap(bitmap: Bitmap, filePath: String, newFileName:String): File {
 
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
@@ -60,8 +51,8 @@ class EditViewModel: ViewModel() {
         if (!dir.exists()) {
             dir.mkdir()
         }
-        val newFileName:String = System.currentTimeMillis().toString()+"_"+fileName
-        val f = File(dir, newFileName)
+
+        val f = File(dir, "$newFileName.png")
         f.createNewFile()
 
         val fo = FileOutputStream(f)
@@ -71,7 +62,7 @@ class EditViewModel: ViewModel() {
         return f
     }
     //TODO merge these 2 functions
-    fun saveBitmapPreview(bitmap: Bitmap, filePath: String, fileName: String, size: Int): File {
+    fun saveBitmapPreview(bitmap: Bitmap, filePath: String, size: Int, newFileName:String): File {
 
         val bytes = ByteArrayOutputStream()
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, size, size, false)
@@ -82,8 +73,8 @@ class EditViewModel: ViewModel() {
         if (!dir.exists()) {
             dir.mkdir()
         }
-        val newFileName:String = System.currentTimeMillis().toString()+"_"+fileName
-        val f = File(dir, newFileName)
+        //val newFileName:String = System.currentTimeMillis().toString()
+        val f = File(dir, "$newFileName.png")
         f.createNewFile()
 
         val fo = FileOutputStream(f)
@@ -91,6 +82,31 @@ class EditViewModel: ViewModel() {
         fo.close()
 
         return f
+    }
+
+    fun save2SharedPreferences(context: Context, caption: String, idCreation: String) {
+        // Get the existing list of objects from shared preferences
+        val prefs = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+        val json = prefs.getString("my_list_key", null)
+
+        // Create a new object to add to the list
+        val myObject = ImageData(idCreation, caption)
+
+        if (json != null) {
+            // If the JSON string is not null, parse it into a list of objects
+            val objectArray = Gson().fromJson(json, Array<ImageData>::class.java).toMutableList()
+
+            objectArray.add(myObject)
+            // Convert the list back to a JSON string and save it to shared preferences
+            val updatedJson = Gson().toJson(objectArray)
+            prefs.edit().putString("my_list_key", updatedJson).apply()
+        } else {
+            // If the JSON string is null, create a new list with the new object and save it to shared preferences
+            val objectList = mutableListOf(myObject)
+            val updatedJson = Gson().toJson(objectList)
+            prefs.edit().putString("my_list_key", updatedJson).apply()
+        }
+
     }
 
     fun shareImage(intent: Intent, context: Context?){
@@ -171,6 +187,8 @@ class EditViewModel: ViewModel() {
         }
         return filteredImageList
     }
+
+
 
 
 }

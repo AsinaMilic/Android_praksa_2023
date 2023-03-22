@@ -1,5 +1,6 @@
 package com.example.feedcraft
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.feedcraft.Adapter.GalleryAdapter
 import com.example.feedcraft.databinding.FragmentFeedBinding
+import com.google.gson.Gson
 import java.io.File
+import java.io.FileInputStream
 
 
 class FeedFragment : Fragment() {
@@ -27,19 +30,14 @@ class FeedFragment : Fragment() {
     private val binding get() = _binding!!
     var intentMainAct: Intent? = null
 
-    private val viewModel: EditViewModel by activityViewModels()
+    private val viewModel: FeedViewModel by activityViewModels()
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var galleryList: ArrayList<GalleryModel>
+    private var galleryList: ArrayList<GalleryModel>? = null
     private lateinit var galleryAdapter: GalleryAdapter
 
     private var clickedImage: GalleryModel? = null
     private lateinit var directory: File
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,27 +62,28 @@ class FeedFragment : Fragment() {
 
             if (uriToDelete != null) {
                 val fileToDelete = uriToDelete.path?.let { it1 -> File(it1) }
-                if (fileToDelete != null) {
-                    if (fileToDelete.exists()) {
+                if ((fileToDelete != null) && fileToDelete.exists())
                         fileToDelete.delete()
-                    }
-                }
             }
-
 
             val action = FeedFragmentDirections.actionItemFeedToDeleteDialogFragment()
             findNavController().navigate(action)
         }
+
         binding.imageViewFeedColorCode.setOnClickListener {
-            if (clickedImage?.dominantColor == 0x00000000)
+            if (clickedImage?.dominantColor == 0x00000000) {
                 clickedImage?.dominantColor = clickedImage?.let { it1 -> viewModel.getDominantColor(it1.imageBitmap) }!!
+                Toast.makeText(context, "Color code is set, please double-click the picture again ❤", Toast.LENGTH_SHORT).show()
+            }
             else
                 clickedImage?.dominantColor = 0x00000000
             galleryAdapter.notifyDataSetChanged()
         }
+
         binding.imageViewFeedEdit.setOnClickListener{
             startActivity(Intent(requireActivity(), EditActivity::class.java))
         }
+
         binding.imageViewButtonPlus.setOnClickListener{
             val action = FeedFragmentDirections.actionItemFeedToFeedDialogFragment()
             findNavController().navigate(action)
@@ -95,31 +94,18 @@ class FeedFragment : Fragment() {
         recyclerView = binding.RecyclerViewGallery
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-        galleryList = ArrayList()
 
-        directory = File(context?.filesDir.toString(), "creation_previews")
-        val files = directory.listFiles()
+        galleryList = viewModel.getGalleryList(requireContext())!!
 
-        if(files == null){
+        if(galleryList == null){
             GalleryImagesInvisible()
             return
         }
-
         GalleryImagesVisible()
 
-        for (file in files) {
-            val bitmap = BitmapFactory.decodeFile(file.absolutePath) // decode the image file to a Bitmap object
-            val uri = Uri.fromFile(file)
-                // use uri here
-
-            //val dominantColor = viewModel.getDominantColor(bitmap)
-            val dominantColor = 0x00000000
-            galleryList.add(GalleryModel(bitmap, dominantColor,uri))
-        }
-
-        galleryAdapter = GalleryAdapter(context, galleryList){ position: Int, active: Boolean ->
+        galleryAdapter = GalleryAdapter(context, galleryList!!){ position: Int, active: Boolean ->
             Toast.makeText(context, "$position,$active", Toast.LENGTH_SHORT).show()
-            clickedImage = galleryList[position]
+            clickedImage = galleryList!![position]
             if(active)
                 EditButtonsVisible()
             else {
@@ -171,7 +157,16 @@ class FeedFragment : Fragment() {
         binding.textViewDelete.visibility = View.INVISIBLE
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(UIApplication.galleryListChanged) {
+            viewModel.getGalleryList(requireContext())?.let {
+                galleryAdapter.galleryListChanged(it)
+                galleryAdapter.notifyItemInserted(0)
+                UIApplication.galleryListChanged = false
+            }
 
-
+        }
+    }
 
 }

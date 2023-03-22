@@ -40,10 +40,10 @@ class DeleteDialogFragment : DialogFragment() {
         }
         deleteDialog?.setOnClickListener {
             OKDel?.setOnClickListener {
-                viewModel.DleteOrCancel(true)
+                viewModel.DeleteOrCancel(true)
             }
             CancelDel?.setOnClickListener {
-                viewModel.DleteOrCancel(false)
+                viewModel.DeleteOrCancel(false)
             }
             //dismiss()
         }

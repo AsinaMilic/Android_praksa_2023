@@ -16,17 +16,13 @@ import com.example.feedcraft.FilterModel
 import com.example.feedcraft.GalleryModel
 import com.example.feedcraft.R
 
-
-
-class GalleryAdapter(context: Context?, private val galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int, active: Boolean) -> Unit) :
+class GalleryAdapter(context: Context?, private var galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int, active: Boolean) -> Unit) :
     RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
     companion object{
         var oneIsSelected: Boolean = false
         var itemSelected: GalleryModel? = null
     }
-    //val viewModel = ViewModelProvider(context as ViewModelStoreOwner)[EditViewModel::class.java]
-
 
     class GalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val galleryImageView: ImageView = itemView.findViewById(R.id.imageItemGallery)
@@ -66,8 +62,10 @@ class GalleryAdapter(context: Context?, private val galleryList: MutableList<Gal
         holder.bind(position, galleryItem, clickListener)
         holder.galleryImageView.setImageBitmap(galleryItem.imageBitmap)
         holder.galleryImageColor.setBackgroundColor(galleryItem.dominantColor)
-        //ovde ne treba da postavim boju???
     }
 
+    fun galleryListChanged(galleryListChanged: MutableList<GalleryModel>){
+        galleryList = galleryListChanged
+    }
 
 }
