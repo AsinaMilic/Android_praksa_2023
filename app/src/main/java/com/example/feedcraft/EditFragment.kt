@@ -1,10 +1,7 @@
 package com.example.feedcraft
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
@@ -72,8 +69,6 @@ class EditFragment :  Fragment() {
         binding.imageViewToEdit.setDrawingCacheEnabled(true); //this thing so i can get a bitmap from imageViewToEdit
 
         binding.imageViewFinish.setOnClickListener{
-            val cameraImage = UIApplication.tempBitmap
-
             val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
             findNavController().navigate(action)
         }
@@ -117,10 +112,12 @@ class EditFragment :  Fragment() {
 
         }
 
+        binding.textViewCaption.setOnClickListener {
+            val action = EditFragmentDirections.actionEditFragmentToAddCaptionDialogFragment()
+            findNavController().navigate(action) }
         binding.ViewCaption.setOnClickListener{
             val action = EditFragmentDirections.actionEditFragmentToAddCaptionDialogFragment()
-            findNavController().navigate(action)
-        }
+            findNavController().navigate(action) }
 
         binding.ViewFilter.setOnClickListener {
             recyclerView.isVisible = true
@@ -239,8 +236,11 @@ class EditFragment :  Fragment() {
     private fun setGpuImage(): GPUImage {
         val gpuImage = GPUImage(context)
         val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Gallery")
-            gpuImage.setImage(UIApplication.imageUri)
+        if(cameraOrGallery == "Gallery") {
+            gpuImage.setImage(BitmapFactory.decodeStream(UIApplication.imageUri?.let {
+                context?.contentResolver?.openInputStream(it)
+            }))
+        }
         else
             gpuImage.setImage(UIApplication.tempBitmap)
         return gpuImage

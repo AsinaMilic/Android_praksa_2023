@@ -8,8 +8,5 @@ class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
-
-     /*   val binding = ActivityEditBinding.inflate(layoutInflater)
-        setContentView(binding.root)*/
     }
 }

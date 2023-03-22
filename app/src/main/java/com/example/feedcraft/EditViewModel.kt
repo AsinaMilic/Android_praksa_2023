@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -101,7 +102,6 @@ class EditViewModel: ViewModel() {
             val updatedJson = Gson().toJson(objectArray)
             prefs.edit().putString("my_list_key", updatedJson).apply()
         } else {
-            // If the JSON string is null, create a new list with the new object and save it to shared preferences
             val objectList = mutableListOf(myObject)
             val updatedJson = Gson().toJson(objectList)
             prefs.edit().putString("my_list_key", updatedJson).apply()
@@ -122,10 +122,11 @@ class EditViewModel: ViewModel() {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_STREAM, uri)
             type = "image/png"
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
         try {
-            context?.startActivity(sendIntent)
+            context?.startActivity(sendIntent) //nece sharing iz edit
         }catch(activityNotFoundEx: ActivityNotFoundException){
             val text = "something bad happened! :("
             val duration = Toast.LENGTH_SHORT

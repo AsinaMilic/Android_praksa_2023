@@ -33,21 +33,17 @@ class FeedFragment : Fragment() {
     private val viewModel: FeedViewModel by activityViewModels()
 
     private lateinit var recyclerView: RecyclerView
-    private var galleryList: ArrayList<GalleryModel>? = null
+    private var galleryList: ArrayList<GalleryModel> = ArrayList()
     private lateinit var galleryAdapter: GalleryAdapter
-
     private var clickedImage: GalleryModel? = null
     private lateinit var directory: File
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentFeedBinding.inflate(inflater, container, false)
-
         init()
-
         return binding.root
     }
 
@@ -55,17 +51,36 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         EditButtonsInvisible()
+        //binding.textViewFeed.visibility = View.VISIBLE //nemoj da diras ovo
 
-        binding.imageViewFeedDelete.setOnClickListener{
-            val files = directory.listFiles()
+        viewModel.deletePicture.observe(viewLifecycleOwner){deletePicture ->
+            if(!deletePicture)
+                return@observe
             val uriToDelete = clickedImage?.uri
 
             if (uriToDelete != null) {
                 val fileToDelete = uriToDelete.path?.let { it1 -> File(it1) }
                 if ((fileToDelete != null) && fileToDelete.exists())
-                        fileToDelete.delete()
+                    fileToDelete.delete()
             }
 
+            val prefs = context?.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+            val json = prefs?.getString("my_list_key", null)
+            val objectArray = Gson().fromJson(json, Array<ImageData>::class.java)
+
+            val idToRemove = extractFileName(uriToDelete.toString())
+
+// Create a new list to hold the objects that will remain in the object array
+            val updatedObjectArray = objectArray.filter { it.IdCreation != idToRemove }
+
+// Convert the updated object array back to JSON and save it in SharedPreferences
+            val editor = prefs?.edit()
+            editor?.putString("my_list_key", Gson().toJson(updatedObjectArray))
+            editor?.apply()
+            refreshRecyclerView()
+        }
+
+        binding.imageViewFeedDelete.setOnClickListener{
             val action = FeedFragmentDirections.actionItemFeedToDeleteDialogFragment()
             findNavController().navigate(action)
         }
@@ -81,7 +96,8 @@ class FeedFragment : Fragment() {
         }
 
         binding.imageViewFeedEdit.setOnClickListener{
-            startActivity(Intent(requireActivity(), EditActivity::class.java))
+            UIApplication.imageUri = clickedImage?.uri
+            startActivity(Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery"))
         }
 
         binding.imageViewButtonPlus.setOnClickListener{
@@ -95,17 +111,18 @@ class FeedFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
 
-        galleryList = viewModel.getGalleryList(requireContext())!!
+        val tempGalleryList = viewModel.getGalleryList(requireContext())
 
-        if(galleryList == null){
+        if(tempGalleryList == null)
             GalleryImagesInvisible()
-            return
+        else{
+            GalleryImagesVisible()
+            galleryList = tempGalleryList
         }
-        GalleryImagesVisible()
 
-        galleryAdapter = GalleryAdapter(context, galleryList!!){ position: Int, active: Boolean ->
+        galleryAdapter = GalleryAdapter(context, galleryList){ position: Int, active: Boolean ->
             Toast.makeText(context, "$position,$active", Toast.LENGTH_SHORT).show()
-            clickedImage = galleryList!![position]
+            clickedImage = galleryList[position]
             if(active)
                 EditButtonsVisible()
             else {
@@ -120,7 +137,7 @@ class FeedFragment : Fragment() {
     private fun GalleryImagesVisible() {
         binding.imageViewGirl1.visibility = View.INVISIBLE
         binding.RecyclerViewGallery.visibility = View.VISIBLE
-       // binding.textViewFeed.visibility = View.INVISIBLE //mozda
+        binding.textViewFeed.visibility = View.INVISIBLE
     }
     private fun GalleryImagesInvisible() {
         binding.imageViewGirl1.visibility = View.VISIBLE
@@ -134,7 +151,6 @@ class FeedFragment : Fragment() {
         binding.RecyclerViewGallery.visibility = View.INVISIBLE
     }
     private fun EditButtonsVisible(){
-
         binding.imageViewButtonPlus.visibility = View.INVISIBLE
         binding.textViewFeed.visibility = View.INVISIBLE
         binding.imageViewFeedEdit.visibility = View.VISIBLE
@@ -146,7 +162,6 @@ class FeedFragment : Fragment() {
     }
 
     private fun EditButtonsInvisible(){
-
         binding.imageViewButtonPlus.visibility = View.VISIBLE
         binding.textViewFeed.visibility = View.INVISIBLE
         binding.imageViewFeedEdit.visibility = View.INVISIBLE
@@ -157,16 +172,26 @@ class FeedFragment : Fragment() {
         binding.textViewDelete.visibility = View.INVISIBLE
     }
 
-    override fun onResume() {
-        super.onResume()
-        if(UIApplication.galleryListChanged) {
-            viewModel.getGalleryList(requireContext())?.let {
-                galleryAdapter.galleryListChanged(it)
-                galleryAdapter.notifyItemInserted(0)
-                UIApplication.galleryListChanged = false
-            }
-
-        }
+    private fun extractFileName(uriString: String): String {
+        val uri = Uri.parse(uriString)
+        val path = uri.path
+        val index = path?.lastIndexOf('/') ?: -1
+        val fileName = if (index >= 0) path?.substring(index + 1) else path
+        val dotIndex = fileName?.lastIndexOf('.') ?: -1
+        return if (dotIndex > 0) fileName?.substring(0, dotIndex) ?: "" else fileName ?: ""
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(UIApplication.galleryListChanged) 
+            refreshRecyclerView()
+    }
+    
+    private fun refreshRecyclerView(){
+        viewModel.getGalleryList(requireContext())?.let {
+            galleryAdapter.galleryListChanged(it)
+            galleryAdapter.notifyDataSetChanged()
+            UIApplication.galleryListChanged = false
+        }
+    }
 }

@@ -10,16 +10,10 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 
 class DeleteDialogFragment : DialogFragment() {
-
     private val viewModel: FeedViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +35,12 @@ class DeleteDialogFragment : DialogFragment() {
         deleteDialog?.setOnClickListener {
             OKDel?.setOnClickListener {
                 viewModel.DeleteOrCancel(true)
+                UIApplication.galleryListChanged = true
+                dismiss()
             }
             CancelDel?.setOnClickListener {
                 viewModel.DeleteOrCancel(false)
+                findNavController().navigateUp()
             }
             //dismiss()
         }

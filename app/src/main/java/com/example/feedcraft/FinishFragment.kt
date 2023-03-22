@@ -34,10 +34,8 @@ class FinishFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Gallery") {
-            val selectedImageFromGalleryUri = UIApplication.imageUri
-            Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewFinishedImage)
-        }
+        if(cameraOrGallery == "Gallery")
+            Glide.with(requireActivity()).load(UIApplication.imageUri).into(binding.imageViewFinishedImage)
         else {
             val cameraImage = UIApplication.tempBitmap
             binding.imageViewFinishedImage.setImageBitmap(cameraImage)

@@ -11,7 +11,7 @@ import com.google.gson.Gson
 import java.io.File
 
 class FeedViewModel : ViewModel() {
-    private val deletePicture = MutableLiveData<Boolean>()
+    val deletePicture = MutableLiveData<Boolean>()
     var dominantColor: MutableLiveData<Int> = MutableLiveData()
 
     fun DeleteOrCancel(deleteCancelOk: Boolean){

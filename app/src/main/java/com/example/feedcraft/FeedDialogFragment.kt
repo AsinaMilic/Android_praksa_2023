@@ -22,7 +22,6 @@ class FeedDialogFragment : DialogFragment() {
     private var _binding: FragmentFeedDialogBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.full_screen_dialog)
@@ -38,11 +37,8 @@ class FeedDialogFragment : DialogFragment() {
         val parentLayout = view?.findViewById<View>(R.id.parent_feed_dialog)
         val feedDialog = view?.findViewById<View>(R.id.viewFeedDialog)
 
-
         val btnGallery = view?.findViewById<TextView>(R.id.textViewDeleteOK)
         val btnCamera = view?.findViewById<TextView>(R.id.textViewDeleteCancel)
-
-
 
         parentLayout?.setOnClickListener {
             dismiss()
@@ -51,17 +47,15 @@ class FeedDialogFragment : DialogFragment() {
         feedDialog?.setOnClickListener {
             // https://c1ctech.com/android-capture-image-from-camera-and-gallery/
             btnCamera?.setOnClickListener {
-                //To take picture from camera
                 val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePicture, 0) //zero can be replaced with any action code
             }
             btnGallery?.setOnClickListener(View.OnClickListener {
-                //To pick photo from gallery
                 val pickPhoto = Intent(
                     Intent.ACTION_PICK,
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 )
-                startActivityForResult(pickPhoto, 1) //one can be replaced with any action code
+                startActivityForResult(pickPhoto, 1)
             })
         }
 
@@ -73,12 +67,10 @@ class FeedDialogFragment : DialogFragment() {
 
     override fun onStart() { //forcing a layout to be fullscreen otherwise fragment wont be fullscreen
         super.onStart()
-
         dialog?.window?.setLayout(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT
         )
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -88,29 +80,17 @@ class FeedDialogFragment : DialogFragment() {
             REQUEST_CAMERA -> if (resultCode == RESULT_OK) {
                 val extras: Bundle? = data?.extras
                 val imageBitmap = extras?.get("data") as Bitmap?
-                //((requireActivity().application) as UIApplication).tempBitmap = imageBitmap
                 UIApplication.tempBitmap = imageBitmap!!
-                val intent = Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Camera")
-                startActivity(intent)
-
-                findNavController().navigateUp()
-
+                startActivity(Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Camera"))
             }
-            else findNavController().navigateUp()
 
             REQUEST_GALLERY -> if (resultCode == RESULT_OK) {
                 val selectedImageUri: Uri? = data?.data
-
                 UIApplication.imageUri = selectedImageUri
-                val intent = Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery")
-                startActivity(intent)
-
-                findNavController().navigateUp()
-
+                startActivity(Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery"))
             }
-            else findNavController().navigateUp()
-
         }
+        findNavController().navigateUp()
     }
 
 }
