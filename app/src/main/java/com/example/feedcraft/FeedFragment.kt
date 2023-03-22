@@ -3,6 +3,7 @@ package com.example.feedcraft
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +60,16 @@ class FeedFragment : Fragment() {
 
         binding.imageViewFeedDelete.setOnClickListener{
             val files = directory.listFiles()
+            val uriToDelete = clickedImage?.uri
+
+            if (uriToDelete != null) {
+                val fileToDelete = uriToDelete.path?.let { it1 -> File(it1) }
+                if (fileToDelete != null) {
+                    if (fileToDelete.exists()) {
+                        fileToDelete.delete()
+                    }
+                }
+            }
 
 
             val action = FeedFragmentDirections.actionItemFeedToDeleteDialogFragment()
@@ -98,9 +109,12 @@ class FeedFragment : Fragment() {
 
         for (file in files) {
             val bitmap = BitmapFactory.decodeFile(file.absolutePath) // decode the image file to a Bitmap object
+            val uri = Uri.fromFile(file)
+                // use uri here
+
             //val dominantColor = viewModel.getDominantColor(bitmap)
             val dominantColor = 0x00000000
-            galleryList.add(GalleryModel(bitmap, dominantColor))
+            galleryList.add(GalleryModel(bitmap, dominantColor,uri))
         }
 
         galleryAdapter = GalleryAdapter(context, galleryList){ position: Int, active: Boolean ->
@@ -120,6 +134,7 @@ class FeedFragment : Fragment() {
     private fun GalleryImagesVisible() {
         binding.imageViewGirl1.visibility = View.INVISIBLE
         binding.RecyclerViewGallery.visibility = View.VISIBLE
+       // binding.textViewFeed.visibility = View.INVISIBLE //mozda
     }
     private fun GalleryImagesInvisible() {
         binding.imageViewGirl1.visibility = View.VISIBLE
@@ -130,7 +145,6 @@ class FeedFragment : Fragment() {
         binding.textViewEdit.visibility = View.INVISIBLE
         binding.textViewColorCode.visibility = View.INVISIBLE
         binding.textViewDelete.visibility = View.INVISIBLE
-
         binding.RecyclerViewGallery.visibility = View.INVISIBLE
     }
     private fun EditButtonsVisible(){

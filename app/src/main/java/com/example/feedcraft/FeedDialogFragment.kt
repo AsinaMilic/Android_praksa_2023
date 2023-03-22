@@ -1,10 +1,8 @@
 package com.example.feedcraft
 
-import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,13 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.example.feedcraft.Constants.Companion.REQUEST_CAMERA
 import com.example.feedcraft.Constants.Companion.REQUEST_GALLERY
 import com.example.feedcraft.databinding.FragmentFeedDialogBinding
@@ -28,6 +21,7 @@ import com.example.feedcraft.databinding.FragmentFeedDialogBinding
 class FeedDialogFragment : DialogFragment() {
     private var _binding: FragmentFeedDialogBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +39,8 @@ class FeedDialogFragment : DialogFragment() {
         val feedDialog = view?.findViewById<View>(R.id.viewFeedDialog)
 
 
-        val btnGallery = view?.findViewById<TextView>(R.id.textViewFeedGallery)
-        val btnCamera = view?.findViewById<TextView>(R.id.textViewFeedCamera)
+        val btnGallery = view?.findViewById<TextView>(R.id.textViewDeleteOK)
+        val btnCamera = view?.findViewById<TextView>(R.id.textViewDeleteCancel)
 
 
 
@@ -56,11 +50,11 @@ class FeedDialogFragment : DialogFragment() {
 
         feedDialog?.setOnClickListener {
             // https://c1ctech.com/android-capture-image-from-camera-and-gallery/
-            btnCamera?.setOnClickListener(View.OnClickListener {
+            btnCamera?.setOnClickListener {
                 //To take picture from camera
                 val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePicture, 0) //zero can be replaced with any action code
-            })
+            }
             btnGallery?.setOnClickListener(View.OnClickListener {
                 //To pick photo from gallery
                 val pickPhoto = Intent(

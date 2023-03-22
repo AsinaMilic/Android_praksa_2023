@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 
 class DeleteDialogFragment : DialogFragment() {
+
+    private val viewModel: FeedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,18 +28,24 @@ class DeleteDialogFragment : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
-
         val view = inflater.inflate(R.layout.fragment_delete_dialog, container, false)
 
         val layout = view?.findViewById<View>(R.id.delete_dialog)
-        val childLayout = view?.findViewById<View>(R.id.viewFeedDialog)
+        val deleteDialog = view?.findViewById<View>(R.id.viewFeedDialog)
+        val OKDel = view?.findViewById<TextView>(R.id.textViewDeleteOK)
+        val CancelDel = view?.findViewById<TextView>(R.id.textViewDeleteCancel)
 
         layout?.setOnClickListener {
             dismiss()
         }
-        childLayout?.setOnClickListener {
-            // Ovdje dodajte željenu akciju koju želite obaviti kada se klikne na unutarnji layout
-            dismiss()
+        deleteDialog?.setOnClickListener {
+            OKDel?.setOnClickListener {
+                viewModel.DleteOrCancel(true)
+            }
+            CancelDel?.setOnClickListener {
+                viewModel.DleteOrCancel(false)
+            }
+            //dismiss()
         }
 
         dialog?.setCanceledOnTouchOutside(true)

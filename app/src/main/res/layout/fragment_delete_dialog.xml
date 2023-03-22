@@ -97,7 +97,7 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/textViewFeedGallery"
+        android:id="@+id/textViewDeleteOK"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button"
@@ -110,7 +110,7 @@
         app:layout_constraintVertical_bias="0.483" />
 
     <TextView
-        android:id="@+id/textViewFeedCamera"
+        android:id="@+id/textViewDeleteCancel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -128,10 +128,10 @@
         android:text="OK"
         android:textColor="@color/icon_text_light"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedGallery"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDeleteOK"
         app:layout_constraintEnd_toStartOf="@+id/guideline34"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
-        app:layout_constraintTop_toTopOf="@+id/textViewFeedGallery"
+        app:layout_constraintTop_toTopOf="@+id/textViewDeleteOK"
         app:layout_constraintVertical_bias="0.511" />
 
     <TextView
@@ -141,10 +141,10 @@
         android:text="Cancel"
         android:textColor="#fff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFeedCamera"
-        app:layout_constraintEnd_toEndOf="@+id/textViewFeedCamera"
-        app:layout_constraintStart_toStartOf="@+id/textViewFeedCamera"
-        app:layout_constraintTop_toTopOf="@+id/textViewFeedCamera" />
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDeleteCancel"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDeleteCancel"
+        app:layout_constraintStart_toStartOf="@+id/textViewDeleteCancel"
+        app:layout_constraintTop_toTopOf="@+id/textViewDeleteCancel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
