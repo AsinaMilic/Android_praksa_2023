@@ -198,10 +198,10 @@
         app:layout_constraintGuide_percent="0.75" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewCaptionFinish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="No Caption ..."
         android:textColor="@color/icon_text_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewMiddleButton"
@@ -213,6 +213,8 @@
         android:id="@+id/imageViewFinishedImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/imageViewMiddleButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline46"
         app:layout_constraintStart_toStartOf="@+id/guidelineStartOfImage"

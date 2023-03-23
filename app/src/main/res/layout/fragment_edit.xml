@@ -94,8 +94,8 @@
         android:id="@+id/imageViewSave"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleY="1."
         android:background="@drawable/header_bg"
+        android:scaleY="1."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -214,6 +214,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Caption"
+        android:textColor="@color/icon_text_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline1vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter"
+        android:textColor="@color/icon_text_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
@@ -234,6 +236,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Brightness"
+        android:textColor="@color/icon_text_light"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline3vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline2vertical"
@@ -244,6 +247,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Saturation"
+        android:textColor="@color/icon_text_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintStart_toStartOf="@+id/guideline3vertical"
@@ -255,6 +259,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contrast"
+        android:textColor="@color/icon_text_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
@@ -266,12 +271,12 @@
         android:layout_height="0dp"
         android:thumb="@drawable/slider_circle"
         android:thumbOffset="4dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
         app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline19"
-        android:visibility="gone"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -336,11 +341,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewCaption"
-        app:layout_constraintEnd_toEndOf="@+id/textViewCaption"
+        app:layout_constraintEnd_toStartOf="@+id/guideline49"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textViewCaption"
+        app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toBottomOf="@+id/viewHeader"
         app:layout_constraintVertical_bias="0.0"
         tools:src="@tools:sample/avatars" />
@@ -353,43 +358,57 @@
         android:gravity="center"
         android:text="Add Caption ..."
         android:textColor="@color/buttons_light"
-        android:textSize="16sp"
-        app:autoSizeMaxTextSize="16sp"
+        android:textSize="20sp"
+        app:autoSizeMaxTextSize="20sp"
         app:autoSizeMinTextSize="8sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
         app:fontFamily="@font/sourcesanspro_semibold"
         app:layout_constraintBottom_toBottomOf="@+id/textViewBrightness"
         app:layout_constraintDimensionRatio="470:70"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4vertical"
+        app:layout_constraintEnd_toStartOf="@+id/guideline49"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline1vertical"
+        app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toBottomOf="@+id/viewHeader"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.604" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/textViewPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
-        android:textSize="20sp"
         android:textColor="@color/buttons_light"
+        android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/TopOfFooter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4vertical"
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
         android:id="@+id/filterRecycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/imageViewSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline19" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

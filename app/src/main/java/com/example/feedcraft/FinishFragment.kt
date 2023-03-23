@@ -41,9 +41,10 @@ class FinishFragment : Fragment() {
             binding.imageViewFinishedImage.setImageBitmap(cameraImage)
         }
 
-        binding.imageViewDiscard.setOnClickListener{
-            activity?.finish()
-        }
+        viewModel.captionText.observe(viewLifecycleOwner) { caption -> binding.textViewCaptionFinish.text = caption }
+
+        binding.imageViewDiscard.setOnClickListener{ activity?.finish() }
+
         binding.imageViewSave.setOnClickListener{
             //if(cameraOrGallery == "Gallery") {
                 val firstPath: String = context?.filesDir.toString() + File.separator
