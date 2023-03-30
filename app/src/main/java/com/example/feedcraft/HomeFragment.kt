@@ -12,10 +12,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,9 +28,6 @@ class HomeFragment : Fragment() {
         binding.textViewStart.setOnClickListener{
             val action = HomeFragmentDirections.actionItemHomeToItemFeed()
             findNavController().navigate(action)
-            //findNavController().navigate(R.id.action_item_home_to_item_feed)
-            //findNavController().navigateUp(
-
         }
 
 

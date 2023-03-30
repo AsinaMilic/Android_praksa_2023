@@ -110,13 +110,7 @@ class EditViewModel: ViewModel() {
     }
 
     fun shareImage(intent: Intent, context: Context?){
-        var uri:Uri? = UIApplication.imageUri //Uri from gallery
-
-        val cameraOrGallery: String = intent.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Camera") {
-            val filePath = context?.filesDir.toString() + File.separator + "saved_creations" + File.separator + "creation_1.png"
-            uri = context?.let { FileProvider.getUriForFile(it, BuildConfig.APPLICATION_ID, File(filePath)) }
-        }
+        val uri:Uri? = UIApplication.imageUri //Uri from gallery
 
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -136,17 +130,9 @@ class EditViewModel: ViewModel() {
     }
 
      fun addDataToList(activity: FragmentActivity, context: Context?, filterList: ArrayList<FilterModel> ){
-        val cameraOrGallery: String = activity.intent?.extras?.getString("CameraOrGallery").toString()
         val previewBitMap: Bitmap
-
-        if(cameraOrGallery == "Gallery") {
-            val selectedImageFromGalleryUri = UIApplication.imageUri
-            previewBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImageFromGalleryUri) //valjda ce radi
-            //Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewToEdit)
-        }
-        else {
-            previewBitMap = UIApplication.tempBitmap!!
-        }
+        val selectedImageFromGalleryUri = UIApplication.imageUri
+        previewBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImageFromGalleryUri) //valjda ce radi
 
         val filters = listOf(
             GPUImageGrayscaleFilter(),

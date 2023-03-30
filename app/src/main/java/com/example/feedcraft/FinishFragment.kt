@@ -33,35 +33,26 @@ class FinishFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Gallery")
-            Glide.with(requireActivity()).load(UIApplication.imageUri).into(binding.imageViewFinishedImage)
-        else {
-            val cameraImage = UIApplication.tempBitmap
-            binding.imageViewFinishedImage.setImageBitmap(cameraImage)
-        }
+        Glide.with(requireActivity()).load(UIApplication.tempBitmap).into(binding.imageViewFinishedImage)
 
         viewModel.captionText.observe(viewLifecycleOwner) { caption -> binding.textViewCaptionFinish.text = caption }
 
         binding.imageViewDiscard.setOnClickListener{ activity?.finish() }
 
         binding.imageViewSave.setOnClickListener{
-            //if(cameraOrGallery == "Gallery") {
-                val firstPath: String = context?.filesDir.toString() + File.separator
-                val fileName: String = System.currentTimeMillis().toString()
-                var bitmap = UIApplication.tempBitmap
-                if (bitmap != null){
-                    viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
-                    viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews", 200, fileName)
-                }
-                else{
-                    val uri: Uri? = UIApplication.imageUri
-                    val inputStream: InputStream? = uri?.let { it1 -> context?.contentResolver?.openInputStream(it1) }
-                    bitmap = BitmapFactory.decodeStream(inputStream)
-                    viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
-                    viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews",200, fileName)
-                }
+            val firstPath: String = context?.filesDir.toString() + File.separator
+            val fileName: String = System.currentTimeMillis().toString()
 
+            //val uri: Uri? = UIApplication.imageUri
+            //val inputStream: InputStream? = uri?.let { it1 -> context?.contentResolver?.openInputStream(it1) }
+            //val bitmap = BitmapFactory.decodeStream(inputStream)
+            val bitmap = UIApplication.tempBitmap
+            if (bitmap != null) {
+                viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
+                viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews",300, fileName)
+            }
+            UIApplication.imageUri = null
+            UIApplication.tempBitmap = null
             UIApplication.galleryListChanged = true
             viewModel.save2SharedPreferences(requireContext(),"hardcoded_caption", fileName)
             activity?.finish()
@@ -75,7 +66,5 @@ class FinishFragment : Fragment() {
         }
 
     }
-
-
 
 }

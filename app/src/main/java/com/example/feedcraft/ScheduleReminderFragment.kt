@@ -13,8 +13,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.feedcraft.databinding.FragmentScheduleReminderBinding
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -22,13 +20,6 @@ class ScheduleReminderFragment : Fragment() {
 
     private var _binding: FragmentScheduleReminderBinding? = null
     private val binding get() = _binding!!
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +31,8 @@ class ScheduleReminderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Toast.makeText(context, "Just press OK when setting the time to get notification immediately",Toast.LENGTH_SHORT).show()
 
         binding.imageViewBack.setOnClickListener{
             val action = ScheduleReminderFragmentDirections.actionScheduleReminderFragmentToFinishFragment()
@@ -55,7 +48,7 @@ class ScheduleReminderFragment : Fragment() {
         var chosenMin = today.get(Calendar.MINUTE)
 
         val descriptionText = binding.imageViewScheduleMessage
-        val button = binding.imageViewDone
+        val btnDone = binding.imageViewDone
         val datePicker = binding.imageViewDate
         val timePicker = binding.textViewTime
 
@@ -91,7 +84,7 @@ class ScheduleReminderFragment : Fragment() {
             timePickerDialog.show()
         }
 // 5
-        button.setOnClickListener {
+        btnDone.setOnClickListener {
             // 6 Get the DateTime the user selected
             val userSelectedDateTime =Calendar.getInstance()
             userSelectedDateTime.set(chosenYear, chosenMonth, chosenDay, chosenHour , chosenMin)
@@ -105,7 +98,9 @@ class ScheduleReminderFragment : Fragment() {
             Toast.makeText(requireContext(), "Reminder set", Toast.LENGTH_SHORT).show()
         }
 
-        binding.checkboxChecked
+        binding.checkboxChecked.setOnCheckedChangeListener  { _, isChecked ->
+            UIApplication.addPictureInNotification = isChecked
+        }
 
     }
 

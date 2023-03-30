@@ -31,6 +31,7 @@ class GalleryAdapter(context: Context?, private var galleryList: MutableList<Gal
 
         fun bind(position: Int, galleryItem: GalleryModel, clickListener: (position: Int, active: Boolean) -> Unit) {
             galleryImageView.setOnClickListener {
+                val galleryItem2 = galleryItem
                 if(!galleryItem.isActive && !oneIsSelected && itemSelected == null){
                     checkmark.isVisible = true
                     oneIsSelected = true

@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewGallery"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@+id/guideline43"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toTopOf="@+id/textViewGallery"
         app:layout_constraintVertical_bias="0.0" />
@@ -136,13 +136,14 @@
         android:id="@+id/imageViewCamera"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         android:src="@drawable/ico_camera"
         app:layout_constraintBottom_toBottomOf="@+id/textViewCamera"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline44"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toTopOf="@+id/guideline41" />
+        app:layout_constraintTop_toTopOf="@+id/guideline41"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textViewGallery"
@@ -154,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textViewDeleteOK"
         app:layout_constraintStart_toStartOf="@+id/guideline43"
         app:layout_constraintTop_toTopOf="@+id/textViewDeleteOK"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintVertical_bias="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline41"
@@ -179,7 +180,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewDeleteCancel"
         app:layout_constraintStart_toStartOf="@+id/guideline44"
-        app:layout_constraintTop_toTopOf="@+id/textViewDeleteCancel" />
+        app:layout_constraintTop_toTopOf="@+id/textViewDeleteCancel"
+        app:layout_constraintVertical_bias="0.4" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline43"

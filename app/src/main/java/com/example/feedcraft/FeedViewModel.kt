@@ -37,15 +37,14 @@ class FeedViewModel : ViewModel() {
                 val file = File(context.filesDir.toString()+ File.separator + "creation_previews", id)
 
                 if (file.exists()) {
-
                     val bitmap = BitmapFactory.decodeFile(file.absolutePath) // decode the image file to a Bitmap object
                     val uri = Uri.fromFile(file)
                     val dominantColor = 0x00000000
                     galleryList.add(GalleryModel(bitmap, dominantColor,uri))
 
-                } else {
+                } else
                     Toast.makeText(context, "File not found for ID: $id", Toast.LENGTH_SHORT).show()
-                }
+
             }
         }
         else

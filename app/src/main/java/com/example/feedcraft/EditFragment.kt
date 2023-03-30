@@ -1,14 +1,14 @@
 package com.example.feedcraft
 
-import android.annotation.SuppressLint
 import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -41,11 +41,6 @@ class EditFragment :  Fragment() {
     private lateinit var filterList: ArrayList<FilterModel>
     private lateinit var filterAdapter: FilterAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,11 +57,14 @@ class EditFragment :  Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        UIApplication.tempBitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver,UIApplication.imageUri)
+        gpuImage = GPUImage(context)
+        gpuImage.setImage(UIApplication.tempBitmap)
         binding.imageViewToEdit.setDrawingCacheEnabled(true); //this thing so i can get a bitmap from imageViewToEdit
+        Glide.with(requireActivity()).load(UIApplication.tempBitmap).into(binding.imageViewToEdit)
 
         binding.imageViewFinish.setOnClickListener{
             val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
@@ -77,38 +75,27 @@ class EditFragment :  Fragment() {
             activity?.finish()
         }
 
-        val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Gallery") {
-            val selectedImageFromGalleryUri = UIApplication.imageUri
-            Glide.with(requireActivity()).load(selectedImageFromGalleryUri).into(binding.imageViewToEdit)
-        }
-        else {
-            val cameraImage = UIApplication.tempBitmap
-            binding.imageViewToEdit.setImageBitmap(cameraImage) //Glide.with(requireActivity()).load(cameraImage).into(binding.imageViewToEdit)
-        }
 
         viewModel.captionText.observe(viewLifecycleOwner) {
                 caption -> binding.textViewCaption.text = caption
+                val widthBitmap = binding.imageViewToEdit.getDrawingCache().width
+                val heightBitmap= binding.imageViewToEdit.getDrawingCache().height
+                val textBitmap = Bitmap.createBitmap(widthBitmap, heightBitmap , Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(textBitmap)
+                val textPaint = Paint().apply {
+                    color = Color.BLUE
+                    textSize = 70f
+                    style = Paint.Style.FILL
+                    isAntiAlias = true
+                }
+                canvas.drawText(binding.textViewCaption.text.toString(), 70f, 70f, textPaint)
 
-            gpuImage = setGpuImage()
-            val widthBitmap = binding.imageViewToEdit.getDrawingCache().width
-            val heightBitmap= binding.imageViewToEdit.getDrawingCache().height
-            val textBitmap = Bitmap.createBitmap(widthBitmap, heightBitmap , Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(textBitmap)
-            val textPaint = Paint().apply {
-                color = Color.BLUE
-                textSize = 50f
-                style = Paint.Style.FILL
-                isAntiAlias = true
-            }
-            canvas.drawText(binding.textViewCaption.text.toString(), 50f, 50f, textPaint)
-
-            // Merge the text bitmap with the original image using a GPUImageTwoInputFilter
-            val blendFilter = GPUImageAddBlendFilter()
-            blendFilter.bitmap = textBitmap
-            gpuImage.setFilter(blendFilter)
-
-            binding.imageViewToEdit.setImageBitmap(gpuImage.bitmapWithFilterApplied)
+                // Merge the text bitmap with the original image using a GPUImageTwoInputFilter
+                val blendFilter = GPUImageAddBlendFilter()
+                blendFilter.bitmap = textBitmap
+                gpuImage.setFilter(blendFilter)
+                UIApplication.tempBitmap = gpuImage.bitmapWithFilterApplied
+                binding.imageViewToEdit.setImageBitmap(gpuImage.bitmapWithFilterApplied)
 
         }
 
@@ -126,57 +113,52 @@ class EditFragment :  Fragment() {
         }
 
         binding.ViewBrightness.setOnClickListener {
+            gpuImage.setImage(UIApplication.tempBitmap)
             openEditOptions()
             setBrightnessSelected()
-            seekBar.setOnSeekBarChangeListener(null)
+            seekBar.setOnSeekBarChangeListener(null) //its important for this line to stay here and not two lines down below
             seekBar.progress = brightnessPercentage
             percentageTextView.text = "$brightnessPercentage%"
-
+            val brightnessFilter = GPUImageBrightnessFilter()
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     percentageTextView.text = "$progress%"
                     brightnessPercentage = progress
+                    val brightnessLevel = ((brightnessPercentage / 100.0f) * 2) - 1
+                    brightnessFilter.setBrightness(brightnessLevel)
+                    gpuImage.setFilter(brightnessFilter)
+                    UIApplication.tempBitmap = gpuImage.bitmapWithFilterApplied
+                    Glide.with(requireActivity()).load(gpuImage.bitmapWithFilterApplied).into(binding.imageViewToEdit)
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar) {}
             })
-
-            gpuImage = setGpuImage()
-
-            val brightnessFilter = GPUImageBrightnessFilter()
-            val brightnessLevel = ((brightnessPercentage / 100.0f) * 2) - 1
-            brightnessFilter.setBrightness(brightnessLevel)
-            gpuImage.setFilter(brightnessFilter)
-
-            binding.imageViewToEdit.setImageBitmap(gpuImage.bitmapWithFilterApplied)
         }
 
         binding.ViewSaturation.setOnClickListener {
+            gpuImage.setImage(UIApplication.tempBitmap)
             openEditOptions()
             setSaturationSelected()
-            seekBar.setOnSeekBarChangeListener(null) //its important for this line to stay here and not two lines down below
+            seekBar.setOnSeekBarChangeListener(null)
             seekBar.progress = saturationPercentage
             percentageTextView.text = "$saturationPercentage%"
+            val saturationFilter = GPUImageSaturationFilter()
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     percentageTextView.text = "$progress%"
                     saturationPercentage = progress
+                    saturationFilter.setSaturation(saturationPercentage/50.0f)
+                    gpuImage.setFilter(saturationFilter)
+                    UIApplication.tempBitmap = gpuImage.bitmapWithFilterApplied
+                    Glide.with(requireActivity()).load(gpuImage.bitmapWithFilterApplied).into(binding.imageViewToEdit)
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar) {}
             })
-
-            gpuImage = setGpuImage()
-
-            val saturationFilter = GPUImageSaturationFilter()
-            saturationFilter.setSaturation(saturationPercentage/50.0f)
-            gpuImage.setFilter(saturationFilter)
-
-            binding.imageViewToEdit.setImageBitmap(gpuImage.bitmapWithFilterApplied)
-
         }
 
         binding.ViewContrast.setOnClickListener {
+            gpuImage.setImage(UIApplication.tempBitmap)
             openEditOptions()
             setContrastSelected()
             seekBar.setOnSeekBarChangeListener(null)
@@ -186,12 +168,14 @@ class EditFragment :  Fragment() {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     percentageTextView.text = "$progress%"
                     contrastPercentage = progress
+                    gpuImage.setFilter(GPUImageContrastFilter((contrastPercentage/50f)))
+                    UIApplication.tempBitmap = gpuImage.bitmapWithFilterApplied
+                    Glide.with(requireActivity()).load(gpuImage.bitmapWithFilterApplied).into(binding.imageViewToEdit)
                 }
                 override fun onStartTrackingTouch(seekBar: SeekBar) {}
                 override fun onStopTrackingTouch(seekBar: SeekBar) {}
             })
         }
-
     }
 
     private fun openEditOptions() {
@@ -219,31 +203,18 @@ class EditFragment :  Fragment() {
     }
     private fun init(){
         recyclerView = binding.filterRecycleView
-        recyclerView.setHasFixedSize(true)             //org RequireContext()
+        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         filterList = ArrayList()
 
         viewModel.addDataToList(requireActivity(), context, filterList)
 
         filterAdapter = FilterAdapter(filterList){ position ->
-            val clickedImage = filterList[position].imageBitmap
-            binding.imageViewToEdit.setImageBitmap(clickedImage)
+            UIApplication.tempBitmap = filterList[position].imageBitmap
+            binding.imageViewToEdit.setImageBitmap(filterList[position].imageBitmap)
         }
-
         recyclerView.adapter = filterAdapter
     }
 
-    private fun setGpuImage(): GPUImage {
-        val gpuImage = GPUImage(context)
-        val cameraOrGallery: String = requireActivity().intent?.extras?.getString("CameraOrGallery").toString()
-        if(cameraOrGallery == "Gallery") {
-            gpuImage.setImage(BitmapFactory.decodeStream(UIApplication.imageUri?.let {
-                context?.contentResolver?.openInputStream(it)
-            }))
-        }
-        else
-            gpuImage.setImage(UIApplication.tempBitmap)
-        return gpuImage
-    }
 
 }

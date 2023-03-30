@@ -10,8 +10,8 @@ class UIApplication : Application() {
         lateinit var tempFilePath: String
         var imageUri: Uri? = null
         var tempBitmap: Bitmap? = null
-        var editedBitmap: Bitmap? = null
         var galleryListChanged: Boolean = false
+        var addPictureInNotification: Boolean = false
     }
 
 }

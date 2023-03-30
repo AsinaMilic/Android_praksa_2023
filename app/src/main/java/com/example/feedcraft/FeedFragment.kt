@@ -77,6 +77,8 @@ class FeedFragment : Fragment() {
             val editor = prefs?.edit()
             editor?.putString("my_list_key", Gson().toJson(updatedObjectArray))
             editor?.apply()
+            GalleryAdapter.itemSelected=null
+            GalleryAdapter.oneIsSelected=false
             refreshRecyclerView()
         }
 

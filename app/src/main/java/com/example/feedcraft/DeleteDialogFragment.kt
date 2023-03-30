@@ -21,7 +21,6 @@ class DeleteDialogFragment : DialogFragment() {
     ): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-
         val view = inflater.inflate(R.layout.fragment_delete_dialog, container, false)
 
         val layout = view?.findViewById<View>(R.id.delete_dialog)
@@ -32,27 +31,24 @@ class DeleteDialogFragment : DialogFragment() {
         layout?.setOnClickListener {
             dismiss()
         }
-        deleteDialog?.setOnClickListener {
-            OKDel?.setOnClickListener {
-                viewModel.DeleteOrCancel(true)
-                UIApplication.galleryListChanged = true
-                dismiss()
-            }
-            CancelDel?.setOnClickListener {
-                viewModel.DeleteOrCancel(false)
-                findNavController().navigateUp()
-            }
-            //dismiss()
+        deleteDialog?.setOnClickListener {}
+
+        OKDel?.setOnClickListener {
+            viewModel.DeleteOrCancel(true)
+            UIApplication.galleryListChanged = true
+            dismiss()
+        }
+        CancelDel?.setOnClickListener {
+            viewModel.DeleteOrCancel(false)
+            findNavController().navigateUp()
         }
 
         dialog?.setCanceledOnTouchOutside(true)
-
         return view
     }
 
     override fun onStart() {
         super.onStart()
-
         dialog?.window?.setLayout(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT

@@ -17,12 +17,6 @@ import androidx.navigation.fragment.findNavController
 
 class AddCaptionDialogFragment : DialogFragment() {
     private val viewModel: EditViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,9 +35,9 @@ class AddCaptionDialogFragment : DialogFragment() {
             dismiss()
         }
 
-        textDialog?.setOnClickListener {
+        /*textDialog?.setOnClickListener {
 
-        }
+        }*/
         okBtn?.setOnClickListener {
             viewModel.setCaptionText(textDialog?.text.toString())
             findNavController().navigateUp()
