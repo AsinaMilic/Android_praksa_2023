@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/item_home"
-        android:name="com.example.feedcraft.HomeFragment"
+        android:name="com.example.feedcraft.mainScreen.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/item_feed"
-        android:name="com.example.feedcraft.FeedFragment"
+        android:name="com.example.feedcraft.mainScreen.FeedFragment"
         android:label="fragment_edit"
         tools:layout="@layout/fragment_feed" >
         <action
@@ -31,22 +31,22 @@
     </fragment>
     <fragment
         android:id="@+id/item_settings"
-        android:name="com.example.feedcraft.SettingsFragment"
+        android:name="com.example.feedcraft.mainScreen.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <dialog
         android:id="@+id/feedDialogFragment"
-        android:name="com.example.feedcraft.FeedDialogFragment"
+        android:name="com.example.feedcraft.mainScreen.FeedDialogFragment"
         android:label="fragment_feed_dialog"
         tools:layout="@layout/fragment_feed_dialog" />
     <dialog
         android:id="@+id/deleteDialogFragment"
-        android:name="com.example.feedcraft.DeleteDialogFragment"
+        android:name="com.example.feedcraft.mainScreen.DeleteDialogFragment"
         android:label="fragment_delete_dialog"
         tools:layout="@layout/fragment_delete_dialog" />
     <!--<activity
         android:id="@+id/editActivity"
-        android:name="com.example.feedcraft.EditActivity"
+        android:name="com.example.feedcraft.editScreen.EditActivity"
         android:label="activity_edit"
         tools:layout="@layout/activity_edit" />-->
 </navigation>

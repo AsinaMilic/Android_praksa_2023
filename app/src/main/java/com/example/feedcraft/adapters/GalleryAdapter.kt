@@ -1,23 +1,16 @@
 package com.example.feedcraft.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.feedcraft.EditViewModel
-import com.example.feedcraft.FilterModel
-import com.example.feedcraft.GalleryModel
+import com.example.feedcraft.dataModels.GalleryModel
 import com.example.feedcraft.R
 
-class GalleryAdapter(context: Context?, private var galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int) -> Unit) :
+class GalleryAdapter(private var galleryList: MutableList<GalleryModel>, private val clickListener: (position: Int) -> Unit) :
     RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
 
     inner class GalleryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

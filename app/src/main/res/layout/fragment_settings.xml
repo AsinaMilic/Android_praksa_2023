@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:configChanges="uiMode"
-    tools:context=".SettingsFragment">
+    tools:context=".mainScreen.SettingsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottomHeader"

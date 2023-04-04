@@ -1,14 +1,12 @@
-package com.example.feedcraft
+package com.example.feedcraft.mainScreen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
-import android.widget.Button
 import android.widget.ProgressBar
+import com.example.feedcraft.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -25,7 +23,6 @@ class SplashActivity : AppCompatActivity() {
         object : CountDownTimer(time, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-
                 proBar.setProgress((time/millisUntilFinished).toInt()*1000, true)
             }
 
@@ -43,7 +40,6 @@ class SplashActivity : AppCompatActivity() {
         if(resultCode == RESULT_OK){
             val value = data?.getStringExtra("main_extra")
             Log.i("SplashActivity", "rezultat je $value")
-//            if(requestCode == null)
 
         }
     }

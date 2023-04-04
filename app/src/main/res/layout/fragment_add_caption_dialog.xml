@@ -5,7 +5,7 @@
     android:id="@+id/add_caption_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddCaptionDialogFragment">
+    tools:context=".editScreen.AddCaptionDialogFragment">
     <!--android:background="@color/transparent"-->
 
     <androidx.constraintlayout.widget.Guideline

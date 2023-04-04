@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.mainScreen
 
 import android.content.ActivityNotFoundException
 import android.content.ContentResolver
@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.feedcraft.BuildConfig
+import com.example.feedcraft.R
 import com.example.feedcraft.databinding.FragmentSettingsBinding
 
 
@@ -102,7 +104,6 @@ class SettingsFragment : Fragment() {
         binding.ViewFeedback.setOnClickListener {
             val subject = "FeedCraft - Version Code: ${BuildConfig.VERSION_CODE}, Version Name: ${BuildConfig.VERSION_NAME}, Device: ${Build.MODEL}, Android Version: ${Build.VERSION.SDK_INT}"
             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                //data = Uri.parse("mailto:$mail")
                 type = "text/plain"
                 putExtra(Intent.EXTRA_SUBJECT, subject)
                 putExtra(Intent.EXTRA_EMAIL,arrayOf(mail))

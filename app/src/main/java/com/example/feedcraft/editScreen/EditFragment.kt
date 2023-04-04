@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.editScreen
 
 import android.graphics.*
 import android.os.Bundle
@@ -16,7 +16,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.feedcraft.editScreen.EditFragmentDirections
+import com.example.feedcraft.UIApplication
 import com.example.feedcraft.adapters.FilterAdapter
+import com.example.feedcraft.dataModels.Edits
+import com.example.feedcraft.dataModels.FilterModel
+import com.example.feedcraft.viewModels.EditViewModel
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.filter.*
 
@@ -39,10 +44,7 @@ class EditFragment :  Fragment() {
     private lateinit var filterList: ArrayList<FilterModel>
     private lateinit var filterAdapter: FilterAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentEditBinding.inflate(inflater, container, false)
 
         init()
@@ -58,13 +60,24 @@ class EditFragment :  Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        UIApplication.tempBitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver,UIApplication.imageUri)
+        val edit= UIApplication.edits
+        if(edit!=null){
+            binding.textViewCaption.text = edit.caption
+            brightnessPercentage = edit.brightness
+            saturationPercentage = edit.saturation
+            contrastPercentage = edit.contrast
+        }
+
+        UIApplication.tempBitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver,
+            UIApplication.imageUri
+        )
         gpuImage = GPUImage(context)
         gpuImage.setImage(UIApplication.tempBitmap)
         binding.imageViewToEdit.setDrawingCacheEnabled(true); //this thing so i can get a bitmap from imageViewToEdit
         Glide.with(requireActivity()).load(UIApplication.tempBitmap).into(binding.imageViewToEdit)
 
         binding.imageViewFinish.setOnClickListener{
+            UIApplication.edits = Edits(binding.textViewCaption.text.toString(),brightnessPercentage,saturationPercentage,contrastPercentage)
             val action = EditFragmentDirections.actionEditFragmentToFinishFragment()
             findNavController().navigate(action)
         }
@@ -72,7 +85,6 @@ class EditFragment :  Fragment() {
         binding.imageViewBack.setOnClickListener {
             activity?.finish()
         }
-
 
         viewModel.captionText.observe(viewLifecycleOwner) {
                 caption -> binding.textViewCaption.text = caption
@@ -204,9 +216,7 @@ class EditFragment :  Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         filterList = ArrayList()
-
-        viewModel.addDataToList(requireActivity(), context, filterList)
-
+        viewModel.addDataToList( context, filterList)
         filterAdapter = FilterAdapter(filterList){ position ->
             UIApplication.tempBitmap = filterList[position].imageBitmap
             binding.imageViewToEdit.setImageBitmap(filterList[position].imageBitmap)

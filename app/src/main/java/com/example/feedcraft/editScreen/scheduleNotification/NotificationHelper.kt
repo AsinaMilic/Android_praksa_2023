@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.editScreen.scheduleNotification
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -7,21 +7,20 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.feedcraft.R
+import com.example.feedcraft.UIApplication
+import com.example.feedcraft.mainScreen.MainActivity
 
 //https://dev.to/blazebrain/building-a-reminder-app-with-local-notifications-using-workmanager-api-385f
 
 class NotificationHelper(val context: Context) {
     private val CHANNEL_ID = "reminder_channel_id"
     private val NOTIFICATION_ID = 1
-
-
     private fun createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT ).apply {

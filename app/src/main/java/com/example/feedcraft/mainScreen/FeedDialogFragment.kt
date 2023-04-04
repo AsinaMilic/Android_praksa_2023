@@ -1,10 +1,9 @@
-package com.example.feedcraft
+package com.example.feedcraft.mainScreen
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +12,19 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.example.feedcraft.Constants.Companion.REQUEST_CAMERA
-import com.example.feedcraft.Constants.Companion.REQUEST_GALLERY
-import com.example.feedcraft.databinding.FragmentFeedDialogBinding
-import kotlinx.coroutines.CoroutineScope
+import com.example.feedcraft.BuildConfig
+import com.example.feedcraft.R
+import com.example.feedcraft.UIApplication
+import com.example.feedcraft.editScreen.EditActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
+const val REQUEST_CAMERA = 0
+const val REQUEST_GALLERY = 1
 
 class FeedDialogFragment : DialogFragment() {
     private var capturedImageUri: Uri? = null
@@ -56,21 +55,24 @@ class FeedDialogFragment : DialogFragment() {
 
         // https://c1ctech.com/android-capture-image-from-camera-and-gallery/
         btnCamera?.setOnClickListener {
-            val fileName = "capturedImage.png"
-            val file = File(context?.cacheDir.toString() + File.separator + fileName)
-            if (file.exists())
-                file.delete() // delete the existing file
-            if (capturedImageUri != null)
-                capturedImageUri = null
-            capturedImageUri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID, file)
-            val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            takePicture.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri)
-            startActivityForResult(takePicture, REQUEST_CAMERA)
-
+            lifecycleScope.launch(Dispatchers.IO) {
+                val fileName = "capturedImage.png"
+                val file = File(requireContext().cacheDir, fileName)
+                capturedImageUri = FileProvider.getUriForFile(requireContext(), BuildConfig.APPLICATION_ID, file)
+                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri)
+                }
+                startActivityForResult(takePicture, REQUEST_CAMERA)
+            }
         }
+
         btnGallery?.setOnClickListener {
-            val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(pickPhoto, 1)
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    startActivityForResult(pickPhoto, REQUEST_GALLERY)
+                }
+            }
         }
 
         dialog?.setCancelable(true)
@@ -80,10 +82,7 @@ class FeedDialogFragment : DialogFragment() {
 
     override fun onStart() { //forcing a layout to be fullscreen otherwise fragment wont be fullscreen
         super.onStart()
-        dialog?.window?.setLayout(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        )
+        dialog?.window?.setLayout(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

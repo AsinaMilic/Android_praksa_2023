@@ -1,22 +1,23 @@
-package com.example.feedcraft
+package com.example.feedcraft.viewModels
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import android.widget.Toast
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.feedcraft.UIApplication
+import com.example.feedcraft.dataModels.GalleryModel
+import com.example.feedcraft.dataModels.ImageData
 import com.example.feedcraft.repository.PreferenceDataStore
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
-
 class FeedViewModel : ViewModel() {
     val deletePicture = MutableLiveData<Boolean>()
     var dominantColor: MutableLiveData<Int> = MutableLiveData()
@@ -64,7 +65,30 @@ class FeedViewModel : ViewModel() {
         if (galleryList.isNotEmpty()) galleryList else null
     }
 
-     fun extractFileName(uriString: String): String {
+    fun deleteImage(context: Context, coroutineScope: CoroutineScope, uriToDelete: Uri?, uriOrgToDelete: Uri?) {
+        if (uriToDelete != null) {
+            val fileToDelete = uriToDelete.path?.let { it -> File(it) }
+            if ((fileToDelete != null) && fileToDelete.exists())
+                fileToDelete.delete()
+        }
+        if (uriOrgToDelete != null) {
+            val fileToDelete = uriOrgToDelete.path?.let { it -> File(it) }
+            if ((fileToDelete != null) && fileToDelete.exists())
+                fileToDelete.delete()
+        }
+
+        val prefDataStore = PreferenceDataStore.getInstance(context)
+        coroutineScope.launch {
+            prefDataStore.getGsonImageData().collect { json ->
+                val objectArray = Gson().fromJson(json, Array<ImageData>::class.java)
+                val idToRemove = extractFileName(uriToDelete.toString())
+                val updatedObjectArray = objectArray.filter { it.IdCreation != idToRemove }
+                prefDataStore.setGsonImageData(Gson().toJson(updatedObjectArray))
+            }
+        }
+    }
+
+     private fun extractFileName(uriString: String): String {
         val uri = Uri.parse(uriString)
         val path = uri.path
         val index = path?.lastIndexOf('/') ?: -1

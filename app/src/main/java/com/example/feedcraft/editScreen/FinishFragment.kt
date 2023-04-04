@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.editScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,18 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.feedcraft.editScreen.FinishFragmentDirections
+import com.example.feedcraft.UIApplication
 import com.example.feedcraft.databinding.FragmentFinishBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
+import com.example.feedcraft.viewModels.EditViewModel
 
 
 class FinishFragment : Fragment() {
 
     private lateinit var binding: FragmentFinishBinding
-    //private val binding get() = _binding!!
     private val viewModel: EditViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,7 +42,7 @@ class FinishFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.imageViewShare.setOnClickListener {
-            viewModel.shareImage(requireActivity().intent, context)
+            viewModel.shareImage(context)
         }
 
     }

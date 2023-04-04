@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.mainScreen
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,6 +11,9 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.feedcraft.R
+import com.example.feedcraft.UIApplication
+import com.example.feedcraft.viewModels.FeedViewModel
 
 class DeleteDialogFragment : DialogFragment() {
     private val viewModel: FeedViewModel by activityViewModels()

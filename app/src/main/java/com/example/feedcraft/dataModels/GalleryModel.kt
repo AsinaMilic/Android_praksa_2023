@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.dataModels
 
 import android.graphics.Bitmap
 import android.graphics.Color

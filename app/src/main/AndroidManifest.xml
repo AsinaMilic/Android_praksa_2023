@@ -32,12 +32,12 @@
         </provider>
 
         <activity
-            android:name=".EditActivity"
+            android:name=".editScreen.EditActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".mainScreen.SplashActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -48,7 +48,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".mainScreen.MainActivity"
             android:screenOrientation="portrait"
             android:exported="false">
         </activity>

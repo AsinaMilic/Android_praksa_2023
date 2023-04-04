@@ -1,4 +1,4 @@
-package com.example.feedcraft
+package com.example.feedcraft.viewModels
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -9,15 +9,15 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.example.feedcraft.UIApplication
+import com.example.feedcraft.dataModels.FilterModel
+import com.example.feedcraft.dataModels.ImageData
 import com.example.feedcraft.repository.PreferenceDataStore
 import com.google.gson.Gson
 import jp.co.cyberagent.android.gpuimage.GPUImage
 import jp.co.cyberagent.android.gpuimage.filter.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.firstOrNull
@@ -27,24 +27,12 @@ import java.io.File
 import java.io.FileOutputStream
 
 class EditViewModel: ViewModel() {
-    val _message: MutableLiveData<String> = MutableLiveData()
-    val message: LiveData<String>
-        get() = _message
 
     val captionText: MutableLiveData<String> = MutableLiveData()
-
-
-    var addPictureNotification: Boolean = false
-
     fun setCaptionText(textToReplaceWith: String){
         captionText.value = textToReplaceWith
     }
 
-
-    fun setAnotherValueToLiveData(messageToReplaceWith:String){
-        _message.value = messageToReplaceWith
-
-    }
 
     fun saveEditedPicture(context: Context) {
         val fileName: String = System.currentTimeMillis().toString()
@@ -94,7 +82,8 @@ class EditViewModel: ViewModel() {
         val prefDataStore = PreferenceDataStore.getInstance(context)
         val json: String? = prefDataStore.getGsonImageData().firstOrNull()
 
-        val myObject = ImageData(idCreation, caption)
+
+        val myObject = ImageData(idCreation, caption, UIApplication.edits)
 
         val objectList = if (json != null) { //if array exist, add ImageData
             Gson().fromJson(json, Array<ImageData>::class.java).toMutableList().apply { add(myObject) }
@@ -106,7 +95,7 @@ class EditViewModel: ViewModel() {
         prefDataStore.setGsonImageData(updatedJson)
     }
 
-    fun shareImage(intent: Intent, context: Context?){
+    fun shareImage(context: Context?){
         val uri:Uri? = UIApplication.imageUri //Uri from gallery
 
         val contentUri = FileProvider.getUriForFile(
@@ -132,7 +121,7 @@ class EditViewModel: ViewModel() {
 
     }
 
-     fun addDataToList(activity: FragmentActivity, context: Context?, filterList: ArrayList<FilterModel> ){
+     fun addDataToList(context: Context?, filterList: ArrayList<FilterModel> ){
         val previewBitMap: Bitmap
         val selectedImageFromGalleryUri = UIApplication.imageUri
         previewBitMap = MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImageFromGalleryUri) //valjda ce radi

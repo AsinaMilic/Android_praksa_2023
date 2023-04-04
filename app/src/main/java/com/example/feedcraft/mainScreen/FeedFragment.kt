@@ -1,9 +1,7 @@
-package com.example.feedcraft
+package com.example.feedcraft.mainScreen
 
-import android.content.Context
+
 import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,20 +13,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.feedcraft.editScreen.EditActivity
+import com.example.feedcraft.mainScreen.FeedFragmentDirections
+import com.example.feedcraft.UIApplication
 import com.example.feedcraft.adapters.GalleryAdapter
+import com.example.feedcraft.dataModels.GalleryModel
 import com.example.feedcraft.databinding.FragmentFeedBinding
-import com.example.feedcraft.repository.PreferenceDataStore
-import com.google.gson.Gson
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.firstOrNull
+import com.example.feedcraft.viewModels.FeedViewModel
 import kotlinx.coroutines.launch
-import java.io.File
 
 
 class FeedFragment : Fragment() {
 
     private lateinit var binding: FragmentFeedBinding
-    //private val binding get() = _binding!!
     private val viewModel: FeedViewModel by activityViewModels()
 
     private lateinit var recyclerView: RecyclerView
@@ -38,10 +35,7 @@ class FeedFragment : Fragment() {
     private var clickedImage: GalleryModel? = null
     private var clickedImages: MutableList<GalleryModel?>? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFeedBinding.inflate(inflater, container, false)
         init()
         return binding.root
@@ -55,33 +49,10 @@ class FeedFragment : Fragment() {
         viewModel.deletePicture.observe(viewLifecycleOwner){deletePicture ->
             if(!deletePicture)
                 return@observe
-            val uriToDelete = clickedImage?.uri
 
-            if (uriToDelete != null) {
-                val fileToDelete = uriToDelete.path?.let { it -> File(it) }
-                if ((fileToDelete != null) && fileToDelete.exists())
-                    fileToDelete.delete()
-            }
+            viewModel.deleteImage(requireContext(), viewLifecycleOwner.lifecycleScope, clickedImage?.uri, clickedImage?.uriOrg) //probaj i uriOrg
 
-            val prefDataStore = PreferenceDataStore.getInstance(requireContext())
-            lifecycleScope.launch {
-                prefDataStore.getGsonImageData().collect { json ->
-                    val objectArray = Gson().fromJson(json, Array<ImageData>::class.java)
-
-                    val idToRemove = viewModel.extractFileName(uriToDelete.toString())
-
-                    val updatedObjectArray = objectArray.filter { it.IdCreation != idToRemove }
-
-                    prefDataStore.setGsonImageData(Gson().toJson(updatedObjectArray))
-
-                    /*GalleryAdapter.itemSelected = null
-                    GalleryAdapter.oneIsSelected = false*/
-                    //galleryAdapter.galleryListBool.removeLast()
-                    //galleryAdapter.galleryListBool.fill(false)
-                    refreshRecyclerView()
-
-                }
-            }
+            refreshRecyclerView()
             EditButtonsInvisible()
             clickedImages?.removeAt(clickedImages!!.indexOf(clickedImage))
             clickedImage = null
@@ -93,10 +64,8 @@ class FeedFragment : Fragment() {
         }
 
         binding.imageViewFeedColorCode.setOnClickListener {
-            if (clickedImage?.dominantColor == 0x00000000) {
-                val color = viewModel.getDominantColor(clickedImage!!.imageBitmap)
-                clickedImage?.dominantColor = color
-            }
+            if (clickedImage?.dominantColor == 0x00000000)
+                clickedImage?.dominantColor =  viewModel.getDominantColor(clickedImage!!.imageBitmap)
             else
                 clickedImage?.dominantColor = 0x00000000
 
@@ -108,7 +77,7 @@ class FeedFragment : Fragment() {
 
         binding.imageViewFeedEdit.setOnClickListener{
             UIApplication.imageUri = clickedImage?.uriOrg
-            startActivity(Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery"))
+            startActivity(Intent(requireContext(), EditActivity::class.java))
         }
 
         binding.imageViewButtonPlus.setOnClickListener{
@@ -141,26 +110,22 @@ class FeedFragment : Fragment() {
 
             clickedImages = MutableList(galleryList.size){null}
 
-            galleryAdapter = GalleryAdapter(context, galleryList){ position: Int ->
+            galleryAdapter = GalleryAdapter(galleryList){ position: Int ->
                 Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
                 val clickedImg = galleryList[position]
 
-                if (clickedImages?.contains(clickedImg) == true) {
+                if (clickedImages?.contains(clickedImg) == true)
                     clickedImages!!.removeAt(clickedImages!!.indexOf(clickedImg))
-                } else {
+                 else
                     clickedImages?.add(position,clickedImg)
-                }
+
                 clickedImage =  clickedImages?.find { it != null }
                 val countNonNulls = clickedImages?.count { it != null }
-                if(countNonNulls == 1) {
+                if(countNonNulls == 1)
                     EditButtonsVisible()
-                }
-                else {
+                else
                     EditButtonsInvisible()
-
-                }
             }
-
             recyclerView.adapter = galleryAdapter
         }
 
@@ -204,11 +169,6 @@ class FeedFragment : Fragment() {
         binding.textViewDelete.visibility = View.INVISIBLE
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-    
     private fun refreshRecyclerView(){
         lifecycleScope.launch {
             viewModel.getGalleryList(requireContext())?.let {

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.feedcraft.dataModels.Edits
 
 //this is at the highest level
 class UIApplication : Application() {
@@ -16,6 +17,8 @@ class UIApplication : Application() {
 
         val _saveCompleted = MutableLiveData<Boolean>()
         val saveCompleted: LiveData<Boolean> = _saveCompleted
+
+        var edits: Edits? = null
     }
 
 }
