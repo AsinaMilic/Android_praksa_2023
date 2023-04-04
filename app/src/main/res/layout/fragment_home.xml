@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="home fragment" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineBottomHeader"
         android:layout_width="wrap_content"
@@ -51,10 +45,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/btn_start"
-        android:gravity="center"
-        android:text="START"
-        android:textColor="#fff"
-        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -65,10 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/btn_sign_in"
-        android:gravity="center"
-        android:text="Sign In"
-        android:textColor="#000"
-        android:textSize="16sp"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -108,5 +95,33 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.82" />
+
+    <TextView
+        android:id="@+id/textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="START"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="@+id/textViewStart"
+        app:layout_constraintStart_toStartOf="@+id/textViewStart"
+        app:layout_constraintTop_toTopOf="@+id/textViewStart" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Sign in"
+        android:gravity="center"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/textViewSignIn"
+        app:layout_constraintStart_toStartOf="@+id/textViewSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

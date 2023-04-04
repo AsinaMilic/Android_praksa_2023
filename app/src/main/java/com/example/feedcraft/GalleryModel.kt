@@ -9,4 +9,4 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import java.net.URI
 
-data class GalleryModel(val imageBitmap: Bitmap, var dominantColor: Int, val uri: Uri, var isActive: Boolean = false) {}
+data class GalleryModel(val imageBitmap: Bitmap, var dominantColor: Int, val uri: Uri, var uriOrg: Uri, var isActive: Boolean = false) {}

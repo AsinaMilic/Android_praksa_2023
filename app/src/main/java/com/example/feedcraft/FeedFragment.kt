@@ -2,47 +2,47 @@ package com.example.feedcraft
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.feedcraft.Adapter.GalleryAdapter
+import com.example.feedcraft.adapters.GalleryAdapter
 import com.example.feedcraft.databinding.FragmentFeedBinding
+import com.example.feedcraft.repository.PreferenceDataStore
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileInputStream
 
 
 class FeedFragment : Fragment() {
 
-    private var _binding: FragmentFeedBinding? = null
-    private val binding get() = _binding!!
-    var intentMainAct: Intent? = null
-
+    private lateinit var binding: FragmentFeedBinding
+    //private val binding get() = _binding!!
     private val viewModel: FeedViewModel by activityViewModels()
 
     private lateinit var recyclerView: RecyclerView
     private var galleryList: ArrayList<GalleryModel> = ArrayList()
     private lateinit var galleryAdapter: GalleryAdapter
+
     private var clickedImage: GalleryModel? = null
-    private lateinit var directory: File
+    private var clickedImages: MutableList<GalleryModel?>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFeedBinding.inflate(inflater, container, false)
+        binding = FragmentFeedBinding.inflate(inflater, container, false)
         init()
         return binding.root
     }
@@ -51,7 +51,6 @@ class FeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         EditButtonsInvisible()
-        //binding.textViewFeed.visibility = View.VISIBLE //nemoj da diras ovo
 
         viewModel.deletePicture.observe(viewLifecycleOwner){deletePicture ->
             if(!deletePicture)
@@ -59,27 +58,33 @@ class FeedFragment : Fragment() {
             val uriToDelete = clickedImage?.uri
 
             if (uriToDelete != null) {
-                val fileToDelete = uriToDelete.path?.let { it1 -> File(it1) }
+                val fileToDelete = uriToDelete.path?.let { it -> File(it) }
                 if ((fileToDelete != null) && fileToDelete.exists())
                     fileToDelete.delete()
             }
 
-            val prefs = context?.getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
-            val json = prefs?.getString("my_list_key", null)
-            val objectArray = Gson().fromJson(json, Array<ImageData>::class.java)
+            val prefDataStore = PreferenceDataStore.getInstance(requireContext())
+            lifecycleScope.launch {
+                prefDataStore.getGsonImageData().collect { json ->
+                    val objectArray = Gson().fromJson(json, Array<ImageData>::class.java)
 
-            val idToRemove = extractFileName(uriToDelete.toString())
+                    val idToRemove = viewModel.extractFileName(uriToDelete.toString())
 
-// Create a new list to hold the objects that will remain in the object array
-            val updatedObjectArray = objectArray.filter { it.IdCreation != idToRemove }
+                    val updatedObjectArray = objectArray.filter { it.IdCreation != idToRemove }
 
-// Convert the updated object array back to JSON and save it in SharedPreferences
-            val editor = prefs?.edit()
-            editor?.putString("my_list_key", Gson().toJson(updatedObjectArray))
-            editor?.apply()
-            GalleryAdapter.itemSelected=null
-            GalleryAdapter.oneIsSelected=false
-            refreshRecyclerView()
+                    prefDataStore.setGsonImageData(Gson().toJson(updatedObjectArray))
+
+                    /*GalleryAdapter.itemSelected = null
+                    GalleryAdapter.oneIsSelected = false*/
+                    //galleryAdapter.galleryListBool.removeLast()
+                    //galleryAdapter.galleryListBool.fill(false)
+                    refreshRecyclerView()
+
+                }
+            }
+            EditButtonsInvisible()
+            clickedImages?.removeAt(clickedImages!!.indexOf(clickedImage))
+            clickedImage = null
         }
 
         binding.imageViewFeedDelete.setOnClickListener{
@@ -89,22 +94,33 @@ class FeedFragment : Fragment() {
 
         binding.imageViewFeedColorCode.setOnClickListener {
             if (clickedImage?.dominantColor == 0x00000000) {
-                clickedImage?.dominantColor = clickedImage?.let { it1 -> viewModel.getDominantColor(it1.imageBitmap) }!!
-                Toast.makeText(context, "Color code is set, please double-click the picture again ❤", Toast.LENGTH_SHORT).show()
+                val color = viewModel.getDominantColor(clickedImage!!.imageBitmap)
+                clickedImage?.dominantColor = color
             }
             else
                 clickedImage?.dominantColor = 0x00000000
+
             galleryAdapter.notifyDataSetChanged()
+            EditButtonsInvisible()
+            clickedImages?.removeAt(clickedImages!!.indexOf(clickedImage))
+            clickedImage = null
         }
 
         binding.imageViewFeedEdit.setOnClickListener{
-            UIApplication.imageUri = clickedImage?.uri
+            UIApplication.imageUri = clickedImage?.uriOrg
             startActivity(Intent(requireContext(), EditActivity::class.java).putExtra("CameraOrGallery", "Gallery"))
         }
 
         binding.imageViewButtonPlus.setOnClickListener{
             val action = FeedFragmentDirections.actionItemFeedToFeedDialogFragment()
             findNavController().navigate(action)
+        }
+
+        UIApplication.saveCompleted.observe(viewLifecycleOwner) { completed ->
+            if (completed) {
+                Toast.makeText(context, "Picture has been saved!", Toast.LENGTH_SHORT).show()
+                refreshRecyclerView()
+            }
         }
     }
 
@@ -113,27 +129,41 @@ class FeedFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
 
-        val tempGalleryList = viewModel.getGalleryList(requireContext())
+        lifecycleScope.launch {
+            val tempGalleryList = viewModel.getGalleryList(requireContext())
 
-        if(tempGalleryList == null)
-            GalleryImagesInvisible()
-        else{
-            GalleryImagesVisible()
-            galleryList = tempGalleryList
-        }
-
-        galleryAdapter = GalleryAdapter(context, galleryList){ position: Int, active: Boolean ->
-            Toast.makeText(context, "$position,$active", Toast.LENGTH_SHORT).show()
-            clickedImage = galleryList[position]
-            if(active)
-                EditButtonsVisible()
-            else {
-                EditButtonsInvisible()
-                clickedImage = null
+            if(tempGalleryList == null)
+                GalleryImagesInvisible()
+            else{
+                GalleryImagesVisible()
+                galleryList = tempGalleryList
             }
+
+            clickedImages = MutableList(galleryList.size){null}
+
+            galleryAdapter = GalleryAdapter(context, galleryList){ position: Int ->
+                Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+                val clickedImg = galleryList[position]
+
+                if (clickedImages?.contains(clickedImg) == true) {
+                    clickedImages!!.removeAt(clickedImages!!.indexOf(clickedImg))
+                } else {
+                    clickedImages?.add(position,clickedImg)
+                }
+                clickedImage =  clickedImages?.find { it != null }
+                val countNonNulls = clickedImages?.count { it != null }
+                if(countNonNulls == 1) {
+                    EditButtonsVisible()
+                }
+                else {
+                    EditButtonsInvisible()
+
+                }
+            }
+
+            recyclerView.adapter = galleryAdapter
         }
 
-        recyclerView.adapter = galleryAdapter
     }
 
     private fun GalleryImagesVisible() {
@@ -174,26 +204,19 @@ class FeedFragment : Fragment() {
         binding.textViewDelete.visibility = View.INVISIBLE
     }
 
-    private fun extractFileName(uriString: String): String {
-        val uri = Uri.parse(uriString)
-        val path = uri.path
-        val index = path?.lastIndexOf('/') ?: -1
-        val fileName = if (index >= 0) path?.substring(index + 1) else path
-        val dotIndex = fileName?.lastIndexOf('.') ?: -1
-        return if (dotIndex > 0) fileName?.substring(0, dotIndex) ?: "" else fileName ?: ""
-    }
-
     override fun onResume() {
         super.onResume()
-        if(UIApplication.galleryListChanged) 
-            refreshRecyclerView()
+
     }
     
     private fun refreshRecyclerView(){
-        viewModel.getGalleryList(requireContext())?.let {
-            galleryAdapter.galleryListChanged(it)
-            galleryAdapter.notifyDataSetChanged()
-            UIApplication.galleryListChanged = false
+        lifecycleScope.launch {
+            viewModel.getGalleryList(requireContext())?.let {
+                galleryAdapter.galleryListChanged(it)
+                galleryList = it
+                galleryAdapter.notifyDataSetChanged()
+                UIApplication.galleryListChanged = false
+            }
         }
     }
 }

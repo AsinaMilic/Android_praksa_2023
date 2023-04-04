@@ -1,4 +1,4 @@
-package com.example.feedcraft.Adapter
+package com.example.feedcraft.adapters
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater

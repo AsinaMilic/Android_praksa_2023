@@ -28,8 +28,6 @@ import java.util.*
 
 
 class FeedDialogFragment : DialogFragment() {
-    private var _binding: FragmentFeedDialogBinding? = null
-    private val binding get() = _binding!!
     private var capturedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +39,7 @@ class FeedDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        //without binding
         val view = inflater.inflate(R.layout.fragment_feed_dialog, container, false)
         val parentLayout = view?.findViewById<View>(R.id.parent_feed_dialog)
         val feedDialog = view?.findViewById<View>(R.id.viewFeedDialog)
@@ -93,19 +91,6 @@ class FeedDialogFragment : DialogFragment() {
 
         when (requestCode) {
             REQUEST_CAMERA -> if (resultCode == RESULT_OK) {
-                /*CoroutineScope(Dispatchers.IO).launch {
-                    UIApplication.tempBitmap = withContext(Dispatchers.IO) {
-                        Glide
-                            .with(requireContext())
-                            .asBitmap()
-                            .load(UIApplication.imageUri)
-                            .submit()
-                            .get()
-                    }
-
-                }
-                findNavController().navigateUp()
-                startActivity(Intent(requireContext(), EditActivity::class.java))*/
                 UIApplication.imageUri = capturedImageUri
                 startActivity(Intent(requireContext(), EditActivity::class.java))
             }
@@ -118,15 +103,6 @@ class FeedDialogFragment : DialogFragment() {
         }
         findNavController().navigateUp()
 
-    }
-    private fun createTempImageFile(): String {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_",
-            ".jpg",
-            storageDir
-        ).absolutePath
     }
 
 }

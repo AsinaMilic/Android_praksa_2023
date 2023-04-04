@@ -1,7 +1,5 @@
 package com.example.feedcraft
 
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +9,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.feedcraft.databinding.FragmentFinishBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.InputStream
 
 
 class FinishFragment : Fragment() {
 
-    private var _binding: FragmentFinishBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFinishBinding
+    //private val binding get() = _binding!!
     private val viewModel: EditViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentFinishBinding.inflate(inflater, container, false)
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentFinishBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,21 +37,7 @@ class FinishFragment : Fragment() {
         binding.imageViewDiscard.setOnClickListener{ activity?.finish() }
 
         binding.imageViewSave.setOnClickListener{
-            val firstPath: String = context?.filesDir.toString() + File.separator
-            val fileName: String = System.currentTimeMillis().toString()
-
-            //val uri: Uri? = UIApplication.imageUri
-            //val inputStream: InputStream? = uri?.let { it1 -> context?.contentResolver?.openInputStream(it1) }
-            //val bitmap = BitmapFactory.decodeStream(inputStream)
-            val bitmap = UIApplication.tempBitmap
-            if (bitmap != null) {
-                viewModel.saveBitmap(bitmap, firstPath + "saved_creations", fileName)
-                viewModel.saveBitmapPreview(bitmap, firstPath + "creation_previews",300, fileName)
-            }
-            UIApplication.imageUri = null
-            UIApplication.tempBitmap = null
-            UIApplication.galleryListChanged = true
-            viewModel.save2SharedPreferences(requireContext(),"hardcoded_caption", fileName)
+            viewModel.saveEditedPicture(requireContext())
             activity?.finish()
         }
         binding.imageViewSchedule.setOnClickListener {
