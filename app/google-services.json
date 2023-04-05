@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "58202615120",
+    "project_id": "feedcraft-c7e3b",
+    "storage_bucket": "feedcraft-c7e3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58202615120:android:f8cde44d7c92d957a51055",
+        "android_client_info": {
+          "package_name": "com.example.feedcraft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58202615120-ufd6cu1rl6ab2v5ub2hialh6faj43j5l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8oY7BxO5Db5ikCrQZF9eMZOnVINil4j8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58202615120-ufd6cu1rl6ab2v5ub2hialh6faj43j5l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

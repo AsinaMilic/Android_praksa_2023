@@ -38,11 +38,13 @@ class FeedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFeedBinding.inflate(inflater, container, false)
         init()
+        Toast.makeText(context, "If something isn't working, go to settings and come back \uD83D\uDE36", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         EditButtonsInvisible()
 
@@ -50,7 +52,7 @@ class FeedFragment : Fragment() {
             if(!deletePicture)
                 return@observe
 
-            viewModel.deleteImage(requireContext(), viewLifecycleOwner.lifecycleScope, clickedImage?.uri, clickedImage?.uriOrg) //probaj i uriOrg
+            viewModel.deleteImage(requireContext(), viewLifecycleOwner.lifecycleScope, clickedImage?.uri, clickedImage?.uriOrg)
 
             refreshRecyclerView()
             EditButtonsInvisible()
@@ -70,9 +72,10 @@ class FeedFragment : Fragment() {
                 clickedImage?.dominantColor = 0x00000000
 
             galleryAdapter.notifyDataSetChanged()
-            EditButtonsInvisible()
-            clickedImages?.removeAt(clickedImages!!.indexOf(clickedImage))
-            clickedImage = null
+            //EditButtonsInvisible()
+
+            //clickedImages?.removeAt(clickedImages!!.indexOf(clickedImage))
+            //clickedImage = null
         }
 
         binding.imageViewFeedEdit.setOnClickListener{
@@ -111,7 +114,7 @@ class FeedFragment : Fragment() {
             clickedImages = MutableList(galleryList.size){null}
 
             galleryAdapter = GalleryAdapter(galleryList){ position: Int ->
-                Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
                 val clickedImg = galleryList[position]
 
                 if (clickedImages?.contains(clickedImg) == true)
